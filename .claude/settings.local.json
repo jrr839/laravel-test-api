@@ -4,9 +4,20 @@
       "Bash(./vendor/bin/sail up:*)",
       "Bash(./vendor/bin/sail composer install:*)",
       "Bash(./vendor/bin/sail npm install:*)",
-      "Bash(./vendor/bin/sail artisan:*)"
+      "Bash(./vendor/bin/sail artisan:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(php artisan route:list:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(./vendor/bin/sail pint:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
 }

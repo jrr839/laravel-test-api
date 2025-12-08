@@ -3,7 +3,7 @@
 **Project:** Laravel REST API
 **Started:** 2025-12-07
 **Status:** 🚧 In Progress
-**Current Phase:** Phase 1 Complete & Merged | Ready for Phase 2
+**Current Phase:** Phase 2 Complete & Ready to Merge | Ready for Phase 3
 
 ---
 
@@ -72,29 +72,34 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
   - Limit: 5 attempts per minute per email+IP
   - Status: ✅ Completed on 2025-12-08
 
-### Phase 2: User Registration ⏳
+### Phase 2: User Registration ✅
 
-- [ ] **Create RegisterRequest**
+- [x] **Create RegisterRequest**
   - Command: `./vendor/bin/sail artisan make:request Api/Auth/RegisterRequest`
   - File: `app/Http/Requests/Api/Auth/RegisterRequest.php`
-  - Validation: name, email (unique), password (confirmed, min:8)
+  - Validation: name, email (unique, lowercase), password (confirmed, min:8)
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Create RegisterController**
+- [x] **Create RegisterController**
   - Command: `./vendor/bin/sail artisan make:controller Api/Auth/RegisterController`
   - File: `app/Http/Controllers/Api/Auth/RegisterController.php`
   - Method: `store()` - Create user, generate token, return 201
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Add registration route**
+- [x] **Add registration route**
   - File: [routes/api.php](routes/api.php)
   - Route: `POST /api/auth/register`
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Write registration tests**
+- [x] **Write registration tests**
   - Command: `./vendor/bin/sail artisan make:test --pest Api/Auth/RegistrationTest`
   - File: `tests/Feature/Api/Auth/RegistrationTest.php`
-  - Cover: success, validation errors, duplicate email
+  - Cover: success, validation errors, duplicate email, password confirmation, lowercase email
+  - Status: ✅ Completed on 2025-12-08 (10 comprehensive tests)
 
-- [ ] **Run registration tests**
+- [x] **Run registration tests**
   - Command: `./vendor/bin/sail artisan test --filter=Registration`
+  - Status: ✅ All 10 tests passing
 
 ### Phase 3: User Login ⏳
 
@@ -233,7 +238,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
 
 | Method | Endpoint | Auth | Description | Status |
 |--------|----------|------|-------------|--------|
-| POST | /api/auth/register | No | Create user + issue token | ⏳ Pending |
+| POST | /api/auth/register | No | Create user + issue token | ✅ Complete |
 | POST | /api/auth/login | No | Authenticate + issue token | ⏳ Pending |
 | GET | /api/auth/user | Yes | Get authenticated user | ⏳ Pending |
 | POST | /api/auth/logout | Yes | Revoke current token | ⏳ Pending |
@@ -393,11 +398,47 @@ The following features are planned for future implementation:
 - **Current branch:** `main`
 - **Next session:** Create `feature/phase-2-user-registration` branch and start Phase 2
 
+### 2025-12-08 - Session 3
+
+#### Phase 2: User Registration
+
+- ✅ Created feature branch: `feature/phase-2-user-registration`
+- ✅ Searched Context7 for Sanctum and Laravel 12 documentation
+- ✅ Created RegisterRequest with comprehensive validation rules (name, email, password)
+- ✅ Created RegisterController with store() method
+- ✅ Added POST /api/auth/register route
+- ✅ Wrote 10 comprehensive registration tests covering:
+  - Successful registration with token generation
+  - Validation errors (missing fields, invalid formats)
+  - Unique email constraint
+  - Password confirmation requirement
+  - Minimum password length (8 characters)
+  - Lowercase email requirement
+  - Token authentication verification
+- ✅ Ran tests - all 10 tests passing (12 total with existing web registration tests)
+- ✅ Ran Pint formatter - all files comply with code style
+- ✅ Phase 2 completed in full
+
+#### Files Created
+- `app/Http/Requests/Api/Auth/RegisterRequest.php`
+- `app/Http/Controllers/Api/Auth/RegisterController.php`
+- `tests/Feature/Api/Auth/RegistrationTest.php`
+
+#### Files Modified
+- `routes/api.php` - Added registration route
+- `API-DEVELOPMENT-PLAN.md` - Marked Phase 2 complete
+
+#### Next Steps
+- Run full test suite to ensure no regressions
+- Commit changes to feature branch
+- Merge feature branch to main
+- Ready for Phase 3: User Login
+
 ---
 
 ## Questions & Issues
 
-No blockers or issues encountered during Phase 1.
+No blockers or issues encountered during Phase 1 or Phase 2.
 
 ---
 
