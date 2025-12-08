@@ -75,7 +75,7 @@ search-docs queries=["pest testing assertions"]
 4. **After phase completion and testing:**
 
    ```bash
-   # Run tests
+   # Run tests on feature branch
    ./vendor/bin/sail artisan test
 
    # Run formatter
@@ -84,6 +84,11 @@ search-docs queries=["pest testing assertions"]
    # Merge to main
    git checkout main
    git merge feature/phase-N-description
+
+   # IMPORTANT: Run tests again on main to ensure no regressions
+   ./vendor/bin/sail artisan test
+
+   # If all tests pass, push to remote (if applicable)
    git push origin main
 
    # Delete feature branch (optional)
@@ -95,6 +100,7 @@ search-docs queries=["pest testing assertions"]
 - ✅ One branch per phase/major feature
 - ✅ Commit after each completed task
 - ✅ Test thoroughly before merging to main
+- ✅ **Always run tests after merging to main** (ensures "green main")
 - ✅ Keep commits atomic and focused
 - ❌ Never commit directly to main
 - ❌ Never merge untested code
