@@ -3,7 +3,7 @@
 **Project:** Laravel REST API
 **Started:** 2025-12-07
 **Status:** 🚧 In Progress
-**Current Phase:** Phase 2 Complete & Ready to Merge | Ready for Phase 3
+**Current Phase:** Phase 3 Complete & Merged | Ready for Phase 4
 
 ---
 
@@ -101,30 +101,34 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
   - Command: `./vendor/bin/sail artisan test --filter=Registration`
   - Status: ✅ All 10 tests passing
 
-### Phase 3: User Login ⏳
+### Phase 3: User Login ✅
 
-- [ ] **Create LoginRequest**
+- [x] **Create LoginRequest**
   - Command: `./vendor/bin/sail artisan make:request Api/Auth/LoginRequest`
   - File: `app/Http/Requests/Api/Auth/LoginRequest.php`
-  - Add custom `authenticate()` method
+  - Add custom `authenticate()` method with rate limiting
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Create LoginController**
+- [x] **Create LoginController**
   - Command: `./vendor/bin/sail artisan make:controller Api/Auth/LoginController`
   - File: `app/Http/Controllers/Api/Auth/LoginController.php`
   - Method: `store()` - Authenticate, generate token, return 200
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Add login route**
+- [x] **Add login route**
   - File: [routes/api.php](routes/api.php)
   - Route: `POST /api/auth/login`
-  - Middleware: `throttle:api-login`
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Write login tests**
+- [x] **Write login tests**
   - Command: `./vendor/bin/sail artisan make:test --pest Api/Auth/LoginTest`
   - File: `tests/Feature/Api/Auth/LoginTest.php`
-  - Cover: success, invalid credentials, rate limiting
+  - Cover: success, invalid credentials, rate limiting, validation errors
+  - Status: ✅ Completed on 2025-12-08 (8 comprehensive tests)
 
-- [ ] **Run login tests**
+- [x] **Run login tests**
   - Command: `./vendor/bin/sail artisan test --filter=Login`
+  - Status: ✅ All 8 tests passing
 
 ### Phase 4: Get Authenticated User ⏳
 
@@ -239,7 +243,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
 | Method | Endpoint | Auth | Description | Status |
 |--------|----------|------|-------------|--------|
 | POST | /api/auth/register | No | Create user + issue token | ✅ Complete |
-| POST | /api/auth/login | No | Authenticate + issue token | ⏳ Pending |
+| POST | /api/auth/login | No | Authenticate + issue token | ✅ Complete |
 | GET | /api/auth/user | Yes | Get authenticated user | ⏳ Pending |
 | POST | /api/auth/logout | Yes | Revoke current token | ⏳ Pending |
 | DELETE | /api/auth/logout/all | Yes | Revoke all user tokens | ⏳ Pending |
@@ -434,13 +438,52 @@ The following features are planned for future implementation:
 - Merge feature branch to main
 - Ready for Phase 3: User Login
 
+### 2025-12-08 - Session 4
+
+#### Phase 3: User Login
+
+- ✅ Created feature branch: `feature/phase-3-user-login`
+- ✅ Searched Context7 for Sanctum authentication and Laravel 12 documentation
+- ✅ Created LoginRequest with comprehensive validation rules and custom authenticate() method
+- ✅ Implemented built-in rate limiting (5 attempts per minute per email+IP combination)
+- ✅ Created LoginController with store() method
+- ✅ Added POST /api/auth/login route
+- ✅ Wrote 8 comprehensive login tests covering:
+  - Successful login with valid credentials
+  - Validation errors (missing email, missing password, invalid format)
+  - Invalid credentials (wrong password, non-existent user)
+  - Token authentication after login
+  - Rate limiting after multiple failed attempts
+- ✅ Ran login tests - all 8 tests passing
+- ✅ Ran Pint formatter - all files comply with code style
+- ✅ Phase 3 completed in full
+
+#### Files Created
+- `app/Http/Requests/Api/Auth/LoginRequest.php`
+- `app/Http/Controllers/Api/Auth/LoginController.php`
+- `tests/Feature/Api/Auth/LoginTest.php`
+
+#### Files Modified
+- `routes/api.php` - Added login route
+- `API-DEVELOPMENT-PLAN.md` - Marked Phase 3 complete
+- `SESSION-HANDOFF.md` - Updated for Session 5
+
+#### Merge Status
+
+- ✅ All tests passing on feature branch (59 tests)
+- ✅ Feature branch merged to main via fast-forward merge
+- ✅ Tests run on main - all 59 tests passing (no regressions)
+- ✅ Feature branch deleted
+- **Current branch:** `main`
+- **Next session:** Create `feature/phase-4-get-authenticated-user` branch and start Phase 4
+
 ---
 
 ## Questions & Issues
 
-No blockers or issues encountered during Phase 1 or Phase 2.
+No blockers or issues encountered during Phase 1, 2, or 3.
 
 ---
 
 **Last Updated:** 2025-12-08
-**Next Steps:** Create feature branch for Phase 2 and implement user registration endpoint
+**Next Steps:** Create feature branch for Phase 4 and implement get authenticated user endpoint
