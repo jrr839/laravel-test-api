@@ -12,7 +12,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(./vendor/bin/sail pint:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(postman collection run --help:*)",
+      "Bash(postman collection run:*)",
+      "Bash(curl:*)",
+      "Bash(./vendor/bin/sail logs:*)"
     ],
     "deny": [],
     "ask": []
