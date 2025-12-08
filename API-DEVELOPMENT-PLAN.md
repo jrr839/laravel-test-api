@@ -3,7 +3,7 @@
 **Project:** Laravel REST API
 **Started:** 2025-12-07
 **Status:** 🚧 In Progress
-**Current Phase:** Phase 3 Complete & Merged | Ready for Phase 4
+**Current Phase:** Phase 4 Complete & Merged | Ready for Phase 5
 
 ---
 
@@ -130,25 +130,29 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
   - Command: `./vendor/bin/sail artisan test --filter=Login`
   - Status: ✅ All 8 tests passing
 
-### Phase 4: Get Authenticated User ⏳
+### Phase 4: Get Authenticated User ✅
 
-- [ ] **Create UserController**
+- [x] **Create UserController**
   - Command: `./vendor/bin/sail artisan make:controller Api/Auth/UserController`
   - File: `app/Http/Controllers/Api/Auth/UserController.php`
   - Method: `show()` - Return authenticated user
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Add user profile route**
+- [x] **Add user profile route**
   - File: [routes/api.php](routes/api.php)
   - Route: `GET /api/auth/user`
   - Middleware: `auth:sanctum`
+  - Status: ✅ Completed on 2025-12-08
 
-- [ ] **Write user profile tests**
+- [x] **Write user profile tests**
   - Command: `./vendor/bin/sail artisan make:test --pest Api/Auth/UserTest`
   - File: `tests/Feature/Api/Auth/UserTest.php`
-  - Cover: authenticated access, unauthenticated 401
+  - Cover: authenticated access, unauthenticated 401, invalid token, login token integration
+  - Status: ✅ Completed on 2025-12-08 (5 comprehensive tests)
 
-- [ ] **Run user profile tests**
+- [x] **Run user profile tests**
   - Command: `./vendor/bin/sail artisan test --filter=User`
+  - Status: ✅ All 5 tests passing
 
 ### Phase 5: Logout & Token Management ⏳
 
@@ -244,7 +248,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
 |--------|----------|------|-------------|--------|
 | POST | /api/auth/register | No | Create user + issue token | ✅ Complete |
 | POST | /api/auth/login | No | Authenticate + issue token | ✅ Complete |
-| GET | /api/auth/user | Yes | Get authenticated user | ⏳ Pending |
+| GET | /api/auth/user | Yes | Get authenticated user | ✅ Complete |
 | POST | /api/auth/logout | Yes | Revoke current token | ⏳ Pending |
 | DELETE | /api/auth/logout/all | Yes | Revoke all user tokens | ⏳ Pending |
 | POST | /api/auth/forgot-password | No | Send password reset email | ⏳ Pending |
@@ -477,13 +481,51 @@ The following features are planned for future implementation:
 - **Current branch:** `main`
 - **Next session:** Create `feature/phase-4-get-authenticated-user` branch and start Phase 4
 
+### 2025-12-08 - Session 5
+
+#### Phase 4: Get Authenticated User
+
+- ✅ Created feature branch: `feature/phase-4-get-authenticated-user`
+- ✅ Searched Context7 for Sanctum authentication middleware documentation
+- ✅ Created UserController with show() method
+- ✅ Added GET /api/auth/user route with auth:sanctum middleware
+- ✅ Wrote 5 comprehensive user profile tests covering:
+  - Authenticated users can retrieve their profile (using Sanctum::actingAs)
+  - Unauthenticated users receive 401
+  - Invalid tokens receive 401
+  - Login token can be used to access profile (integration test)
+  - Correct UserResource data structure validation
+- ✅ Ran tests - all 5 tests passing (64 total tests)
+- ✅ Ran Pint formatter - all files comply with code style
+- ✅ Phase 4 completed in full
+
+#### Files Created in Session 5
+
+- `app/Http/Controllers/Api/Auth/UserController.php`
+- `tests/Feature/Api/Auth/UserTest.php`
+
+#### Files Modified in Session 5
+
+- `routes/api.php` - Added GET /api/auth/user route with auth:sanctum middleware
+- `API-DEVELOPMENT-PLAN.md` - Marked Phase 4 complete
+- `SESSION-HANDOFF.md` - Updated for Session 6
+
+#### Merge Status - Session 5
+
+- ✅ All tests passing on feature branch (64 tests)
+- ✅ Feature branch merged to main via fast-forward merge
+- ✅ Tests run on main - all 64 tests passing (no regressions)
+- ✅ Feature branch deleted
+- **Current branch:** `main`
+- **Next session:** Create `feature/phase-5-logout-token-management` branch and start Phase 5
+
 ---
 
 ## Questions & Issues
 
-No blockers or issues encountered during Phase 1, 2, or 3.
+No blockers or issues encountered during Phase 1, 2, 3, or 4.
 
 ---
 
 **Last Updated:** 2025-12-08
-**Next Steps:** Create feature branch for Phase 4 and implement get authenticated user endpoint
+**Next Steps:** Create feature branch for Phase 5 and implement logout & token management endpoints
