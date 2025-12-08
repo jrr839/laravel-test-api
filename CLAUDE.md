@@ -1,4 +1,123 @@
 <laravel-boost-guidelines>
+=== new session instructions ===
+
+# 🚨 MANDATORY: New Claude Code Session Instructions
+
+**READ THIS FIRST before doing ANY work in this codebase!**
+
+This project uses a multi-session workflow to manage context limits. Every new Claude Code session MUST follow these steps:
+
+## Step 1: Read Session Handoff Document
+📄 **File:** [SESSION-HANDOFF.md](SESSION-HANDOFF.md)
+
+- Contains current session status, what was completed, and what's next
+- Lists all files modified in the last session
+- Provides important context and blockers
+- Includes immediate next steps
+
+**Action:** Read the entire SESSION-HANDOFF.md file before proceeding.
+
+## Step 2: Check API Development Plan
+📋 **File:** [API-DEVELOPMENT-PLAN.md](API-DEVELOPMENT-PLAN.md)
+
+- Master tracking document for the entire project
+- Shows which phases are complete (✅), in progress (🚧), or pending (⏳)
+- Contains all API endpoints, response formats, and testing strategy
+- Lists out-of-scope features for future reference
+
+**Action:** Check the Implementation Checklist to see overall progress.
+
+## Step 3: Use Context7 for Latest Documentation
+🔍 **Tool:** Laravel Boost MCP (`search-docs`)
+
+- **ALWAYS** search Context7 before implementing ANY Laravel feature
+- Context7 provides version-specific documentation for your exact package versions
+- Never guess or assume - search first, code second
+
+**Examples:**
+```
+search-docs queries=["sanctum api token authentication"]
+search-docs queries=["form requests validation laravel 12"]
+search-docs queries=["pest testing assertions"]
+```
+
+**Action:** Before writing code for a feature, search Context7 for the latest documentation.
+
+## Step 4: Git Branching Workflow
+
+🌿 **CRITICAL:** Always use feature branches - NEVER commit directly to main
+
+**Before starting any phase/feature:**
+
+1. **Create a feature branch** from main:
+
+   ```bash
+   git checkout main
+   git pull origin main  # Ensure main is up to date
+   git checkout -b feature/phase-N-description
+   ```
+
+2. **Branch Naming Convention:**
+   - Format: `feature/phase-N-description`
+   - Examples:
+     - `feature/phase-1-foundation-setup`
+     - `feature/phase-2-user-registration`
+     - `feature/phase-3-user-login`
+   - Use lowercase with hyphens
+
+3. **Commit frequently** with clear, descriptive messages:
+
+   ```bash
+   git add .
+   git commit -m "Add HasApiTokens trait to User model"
+   ```
+
+4. **After phase completion and testing:**
+
+   ```bash
+   # Run tests
+   ./vendor/bin/sail artisan test
+
+   # Run formatter
+   ./vendor/bin/sail pint --dirty
+
+   # Merge to main
+   git checkout main
+   git merge feature/phase-N-description
+   git push origin main
+
+   # Delete feature branch (optional)
+   git branch -d feature/phase-N-description
+   ```
+
+**Best Practices:**
+
+- ✅ One branch per phase/major feature
+- ✅ Commit after each completed task
+- ✅ Test thoroughly before merging to main
+- ✅ Keep commits atomic and focused
+- ❌ Never commit directly to main
+- ❌ Never merge untested code
+
+## Step 5: Follow Project Conventions
+📖 Read the sections below (Laravel Boost Guidelines, PHP rules, Test rules, etc.)
+
+## Step 6: Update Handoff Document
+📝 **At the end of your session:**
+
+1. Update API-DEVELOPMENT-PLAN.md with completed tasks
+2. Update SESSION-HANDOFF.md with:
+   - What you accomplished
+   - Files you modified
+   - Current git branch
+   - Any blockers or issues
+   - Next steps for the next session
+3. Commit your changes with clear messages (on feature branch)
+4. Run tests and Pint formatter if you wrote code
+5. Merge to main only after testing and approval
+
+---
+
 === foundation rules ===
 
 # Laravel Boost Guidelines
@@ -8,11 +127,13 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 ## Foundational Context
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.1
+- php - 8.4.15
 - inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
+- laravel/sanctum (SANCTUM) - v4
+- laravel/socialite (SOCIALITE) - v5
 - laravel/wayfinder (WAYFINDER) - v0
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
