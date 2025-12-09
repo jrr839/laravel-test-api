@@ -1,10 +1,10 @@
 # Session Handoff Document
 
-**Last Updated:** 2025-12-08 (End of Session 8)
+**Last Updated:** 2025-12-08 (End of Session 9)
 **Session End Time:** 2025-12-08
-**Next Session:** N/A - Project Complete
+**Next Session:** N/A - Project Complete (with API Documentation)
 **Current Branch:** `main`
-**Project Status:** ✅ **COMPLETE - ALL 7 PHASES FINISHED**
+**Project Status:** ✅ **COMPLETE - ALL 8 PHASES FINISHED**
 
 ---
 
@@ -14,10 +14,11 @@
 
 ### Project Status
 
-- ✅ **All 7 phases completed**
-- ✅ **90 Pest tests passing** (299 assertions)
+- ✅ **All 8 phases completed** (including Phase 8: API Documentation)
+- ✅ **94 Pest tests passing** (307 assertions)
+- ✅ **API documentation accessible at /docs** (protected, jonathanrr839@gmail.com only)
 - ✅ **Postman collection created and tested**
-- ✅ **All API endpoints functional**
+- ✅ **All API endpoints functional and documented**
 - ✅ **Code properly formatted** (Pint)
 - ✅ **Production ready**
 
@@ -27,6 +28,212 @@
 2. ✅ **Review [CLAUDE.md](CLAUDE.md)** - Project conventions and workflows
 3. ✅ **Use Context7 (Laravel Boost MCP)** - Always search latest docs before implementing
 4. ✅ **Follow git workflow** - Create feature branches, test, then merge to main
+
+---
+
+## Session 9 Summary (COMPLETED - API DOCUMENTATION)
+
+### Session Info
+- **Date:** 2025-12-08
+- **Phase:** Phase 8 - API Documentation
+- **Status:** ✅ **COMPLETED - API DOCUMENTATION ACCESSIBLE**
+- **Duration:** ~2.5 hours
+- **Branch:** `main`
+
+### What Was Accomplished
+
+#### ✅ Completed Tasks
+
+1. ✅ Installed Scribe Laravel package (knuckleswtf/scribe v5.6.0):
+   - Ran `./vendor/bin/sail composer require --dev knuckleswtf/scribe`
+   - Published Scribe config: `./vendor/bin/sail artisan vendor:publish --tag=scribe-config`
+
+2. ✅ Configured environment variables:
+   - Added `API_BASE_URL=http://localhost/api` to .env
+   - Added `SCRIBE_AUTH_ENABLED=true` to .env
+   - Added `SCRIBE_TEST_TOKEN=` to .env
+   - Updated .env.example with same variables
+
+3. ✅ Updated database seeder with documentation user:
+   - Added `jonathanrr839@gmail.com` user to DatabaseSeeder.php
+   - Password: `12345678`, email verified
+   - Ran seeder to create user
+
+4. ✅ Configured Scribe in config/scribe.php:
+   - Set base_url to `env('API_BASE_URL')`
+   - Disabled auto-add routes (`add_routes => false`)
+   - Configured route matching for `api/auth/*` prefix
+   - Set example languages: bash, javascript, php
+   - Enabled auth with Bearer token
+   - Enabled "Try It Out" feature
+   - Configured static type: laravel (generates Blade views)
+
+5. ✅ Created authorization Gate in AppServiceProvider:
+   - Added `view-api-docs` Gate that checks email === 'jonathanrr839@gmail.com'
+   - Gate defined in `boot()` method
+
+6. ✅ Created custom middleware EnsureCanViewApiDocs:
+   - File: `app/Http/Middleware/EnsureCanViewApiDocs.php`
+   - Checks Gate authorization, returns 403 if denied
+   - Registered middleware alias `can.view.docs` in bootstrap/app.php
+
+7. ✅ Added protected documentation routes to routes/web.php:
+   - GET /docs - Main documentation page (Blade view)
+   - GET /docs.postman - Postman collection download
+   - GET /docs.openapi - OpenAPI spec download (YAML)
+   - GET /docs.json - JSON collection for tests
+   - All routes protected with: `['auth', 'verified', 'can.view.docs']` middleware
+
+8. ✅ Annotated all 7 API controllers with comprehensive PHPDoc:
+   - RegisterController: @group, @bodyParam, @response 201, @response 422
+   - LoginController: @group, @bodyParam, @response 200, @response 401, @response 429
+   - UserController: @authenticated, @response 200, @response 401
+   - LogoutController (destroy): @authenticated, @response 204, @response 401
+   - LogoutController (destroyAll): @authenticated, @response 204, @response 401
+   - PasswordResetController (sendResetLink): @bodyParam, @response 200, @response 400
+   - PasswordResetController (reset): @bodyParam, @response 200, @response 400, @response 422
+   - All controllers grouped under "Authentication" with detailed descriptions
+
+9. ✅ Generated Scribe documentation:
+   - Ran `./vendor/bin/sail artisan scribe:generate`
+   - Generated static HTML docs in `storage/app/private/scribe/`
+   - Created Blade views in `resources/views/scribe/`
+   - Generated Postman collection at `storage/app/private/scribe/collection.json`
+   - Generated OpenAPI spec at `storage/app/private/scribe/openapi.yaml`
+
+10. ✅ Wrote 4 comprehensive API documentation tests:
+    - Test file: `tests/Feature/ApiDocumentationTest.php`
+    - Authorized user can access /docs (200 OK)
+    - Unauthorized user gets 403 Forbidden with error message
+    - Unauthenticated user redirects to /login
+    - Authorized user can access /docs.json with correct Content-Type
+
+11. ✅ Ran full test suite:
+    - All 94 tests passing (307 assertions)
+    - 90 existing tests + 4 new documentation tests
+    - No regressions
+
+12. ✅ Ran Pint formatter:
+    - Fixed code style in 12 files
+    - 8 style issues corrected
+
+13. ✅ Updated project documentation:
+    - Marked all Phase 8 tasks complete in API-DEVELOPMENT-PLAN.md
+    - Updated SESSION-HANDOFF.md (this document)
+
+14. ✅ Fixed documentation UI issues:
+    - Switched from `type: 'laravel'` to `type: 'static'` in config/scribe.php
+    - Updated routes to serve static HTML from `public/docs/index.html`
+    - Regenerated documentation with static type
+    - Fixed: Black bars on all sides (now full-width layout)
+    - Fixed: Navigation links not working (JavaScript now loads correctly)
+    - Verified all tests still pass (94/94)
+
+#### 🎯 API Documentation Features
+
+**Documentation Includes:**
+- ✅ All 7 API endpoints documented with full details
+- ✅ Request parameters with types, validation rules, examples
+- ✅ Response examples for success and error scenarios
+- ✅ HTTP status codes (200, 201, 204, 400, 401, 422, 429)
+- ✅ Authentication requirements clearly marked
+- ✅ Code examples in 3 languages: bash (curl), JavaScript (fetch), PHP (Guzzle)
+- ✅ Interactive "Try It Out" feature
+- ✅ Grouped endpoints under "Authentication" category
+- ✅ Beautiful, responsive HTML documentation
+
+**Access Control:**
+- ✅ Documentation accessible ONLY to `jonathanrr839@gmail.com`
+- ✅ Requires web authentication (Fortify)
+- ✅ Gate-based authorization
+- ✅ Custom middleware for route protection
+- ✅ Proper 403 error handling for unauthorized users
+
+**Downloads Available:**
+- ✅ Postman collection (JSON)
+- ✅ OpenAPI specification (YAML)
+
+#### ⚠️ Known Limitations
+
+1. **Next.js Code Examples (Deferred)**:
+   - Custom Next.js template created but disabled
+   - Scribe 5.x has specific requirements for custom templates
+   - Files created but not active:
+     - `resources/views/partials/example-requests/nextjs.blade.php`
+     - `resources/views/scribe/partials/example-requests/nextjs.blade.php`
+   - Can be enabled later with further troubleshooting
+
+2. **Manual Testing ✅ COMPLETED**:
+   - ✅ Login as jonathanrr839@gmail.com works
+   - ✅ Navigate to http://localhost/docs - documentation loads correctly
+   - ✅ All 7 endpoints visible and documented
+   - ✅ Code examples render correctly (3 languages: bash, JavaScript, PHP)
+   - ✅ Response examples display properly
+   - ✅ Full-width layout (no black bars)
+   - ✅ Navigation links work correctly (smooth scroll to endpoints)
+
+#### ⏳ Next Tasks
+
+**None - Project Complete!**
+
+Optional future enhancements:
+- Enable Next.js code examples (requires Scribe template troubleshooting)
+- Add more example languages (Python, Ruby, etc.)
+- Customize documentation theme/styling
+- Add request/response schemas
+- Enable authentication token example generation
+
+---
+
+## Files Modified in Session 9
+
+### Created Files
+
+- ✅ `config/scribe.php` - Scribe configuration file (published from vendor)
+- ✅ `app/Http/Middleware/EnsureCanViewApiDocs.php` - Custom middleware for documentation access control
+- ✅ `tests/Feature/ApiDocumentationTest.php` - 4 comprehensive documentation access tests
+- ✅ `resources/views/scribe/index.blade.php` - Main documentation page (generated by Scribe)
+- ✅ `resources/views/scribe/` - Complete Scribe Blade view templates (generated)
+- ✅ `storage/app/private/scribe/collection.json` - Postman collection (generated)
+- ✅ `storage/app/private/scribe/openapi.yaml` - OpenAPI specification (generated)
+- ✅ `resources/views/partials/example-requests/nextjs.blade.php` - Custom Next.js template (created but disabled)
+- ✅ `resources/views/scribe/partials/example-requests/nextjs.blade.php` - Alt Next.js template location (created but disabled)
+
+### Modified Files
+
+- ✅ `.env` - Added API_BASE_URL, SCRIBE_AUTH_ENABLED, SCRIBE_TEST_TOKEN
+- ✅ `.env.example` - Added API_BASE_URL, SCRIBE_AUTH_ENABLED, SCRIBE_TEST_TOKEN
+- ✅ `database/seeders/DatabaseSeeder.php` - Added jonathanrr839@gmail.com user
+- ✅ `app/Providers/AppServiceProvider.php` - Added view-api-docs Gate definition
+- ✅ `bootstrap/app.php` - Registered can.view.docs middleware alias
+- ✅ `routes/web.php` - Added 4 protected documentation routes, updated to serve static HTML files (UI fix)
+- ✅ `app/Http/Controllers/Api/Auth/RegisterController.php` - Added comprehensive PHPDoc annotations
+- ✅ `app/Http/Controllers/Api/Auth/LoginController.php` - Added comprehensive PHPDoc annotations
+- ✅ `app/Http/Controllers/Api/Auth/UserController.php` - Added comprehensive PHPDoc annotations
+- ✅ `app/Http/Controllers/Api/Auth/LogoutController.php` - Added comprehensive PHPDoc annotations
+- ✅ `app/Http/Controllers/Api/Auth/PasswordResetController.php` - Added comprehensive PHPDoc annotations
+- ✅ `config/scribe.php` - Changed type from 'laravel' to 'static' (UI fix)
+- ✅ `API-DEVELOPMENT-PLAN.md` - Marked Phase 8 complete, added Session 9 log
+- ✅ `SESSION-HANDOFF.md` - This update (Session 9 summary + UI fix documentation)
+- ✅ `composer.json` - Added knuckleswtf/scribe to dev dependencies
+- ✅ `composer.lock` - Updated with Scribe package and dependencies
+
+### Files to Note
+
+**Scribe Generated Assets:**
+- `public/docs/` - Static HTML documentation (index.html, CSS, JS, images)
+- `public/docs/collection.json` - Postman collection
+- `public/docs/openapi.yaml` - OpenAPI specification
+- Old files (now unused):
+  - `storage/app/private/scribe/` - Generated files from laravel type (superseded)
+  - `resources/views/scribe/` - Generated Blade templates (superseded)
+
+**Why These Routes Work:**
+- Web routes use Fortify authentication (already configured)
+- Gate checks user email for authorization
+- Middleware applies both auth and gate check
+- Static HTML files served from `public/docs/` via `response()->file()`
+- All assets (CSS, JS) properly bundled in static HTML
 
 ---
 

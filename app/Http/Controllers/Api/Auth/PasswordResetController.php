@@ -12,10 +12,27 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
+/**
+ * @group Authentication
+ *
+ * Endpoints for user registration, login, and account management
+ */
 class PasswordResetController extends Controller
 {
     /**
-     * Send password reset link to user's email.
+     * Request password reset
+     *
+     * Send a password reset link to the user's email address.
+     * Check MailHog (http://localhost:8025) in development to retrieve the token.
+     *
+     * @bodyParam email string required User's email address. Example: john@example.com
+     *
+     * @response 200 {
+     *   "message": "We have emailed your password reset link!"
+     * }
+     * @response 400 {
+     *   "message": "We can't find a user with that email address."
+     * }
      */
     public function sendResetLink(ForgotPasswordRequest $request): JsonResponse
     {
@@ -35,7 +52,28 @@ class PasswordResetController extends Controller
     }
 
     /**
-     * Reset user's password.
+     * Reset password
+     *
+     * Reset the user's password using the token from the password reset email.
+     * Password must be at least 8 characters and confirmed. Token expires after 60 minutes.
+     *
+     * @bodyParam token string required Password reset token from email. Example: abc123token456
+     * @bodyParam email string required User's email address. Example: john@example.com
+     * @bodyParam password string required New password. Minimum 8 characters. Example: newpassword123
+     * @bodyParam password_confirmation string required Password confirmation. Must match password. Example: newpassword123
+     *
+     * @response 200 {
+     *   "message": "Your password has been reset!"
+     * }
+     * @response 400 {
+     *   "message": "This password reset token is invalid."
+     * }
+     * @response 422 {
+     *   "message": "The password confirmation does not match.",
+     *   "errors": {
+     *     "password": ["The password confirmation does not match."]
+     *   }
+     * }
      */
     public function reset(ResetPasswordRequest $request): JsonResponse
     {

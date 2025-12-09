@@ -1,0 +1,468 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Authentication Documentation'
+  description: 'REST API endpoints for user authentication using Laravel Sanctum. Includes user registration, login, profile access, logout, and password recovery.'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost/api'
+tags:
+  -
+    name: Authentication
+    description: "\nEndpoints for user registration, login, and account management"
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your API token by logging in via <code>POST /api/auth/login</code> or registering via <code>POST /api/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.'
+security:
+  -
+    default: []
+paths:
+  /api/auth/register:
+    post:
+      summary: 'Register a new user'
+      operationId: registerANewUser
+      description: "Create a new user account and receive an API authentication token.\nEmail must be unique and will be converted to lowercase."
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    user:
+                      id: 1
+                      name: 'John Doe'
+                      email: john@example.com
+                      email_verified_at: null
+                      created_at: '2025-12-08T10:00:00.000000Z'
+                    token: 1|abcdefghijklmnopqrstuvwxyz123456
+                    token_type: Bearer
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'John Doe'
+                          email:
+                            type: string
+                            example: john@example.com
+                          email_verified_at:
+                            type: string
+                            example: null
+                          created_at:
+                            type: string
+                            example: '2025-12-08T10:00:00.000000Z'
+                      token:
+                        type: string
+                        example: 1|abcdefghijklmnopqrstuvwxyz123456
+                      token_type:
+                        type: string
+                        example: Bearer
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The email has already been taken.'
+                  errors:
+                    email:
+                      - 'The email has already been taken.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The email has already been taken.'
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        example:
+                          - 'The email has already been taken.'
+                        items:
+                          type: string
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "User's full name."
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: "User's email address. Must be unique."
+                  example: john@example.com
+                password:
+                  type: string
+                  description: 'Password. Minimum 8 characters.'
+                  example: password123
+                password_confirmation:
+                  type: string
+                  description: 'Password confirmation. Must match password.'
+                  example: password123
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      security: []
+  /api/auth/login:
+    post:
+      summary: 'User login'
+      operationId: userLogin
+      description: "Authenticate with email and password to receive an API token.\nRate limited to 5 attempts per minute per email+IP combination."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    user:
+                      id: 1
+                      name: 'John Doe'
+                      email: john@example.com
+                      email_verified_at: '2025-12-08T10:00:00.000000Z'
+                      created_at: '2025-12-08T09:00:00.000000Z'
+                    token: 2|zyxwvutsrqponmlkjihgfedcba987654
+                    token_type: Bearer
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'John Doe'
+                          email:
+                            type: string
+                            example: john@example.com
+                          email_verified_at:
+                            type: string
+                            example: '2025-12-08T10:00:00.000000Z'
+                          created_at:
+                            type: string
+                            example: '2025-12-08T09:00:00.000000Z'
+                      token:
+                        type: string
+                        example: 2|zyxwvutsrqponmlkjihgfedcba987654
+                      token_type:
+                        type: string
+                        example: Bearer
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'These credentials do not match our records.'
+                properties:
+                  message:
+                    type: string
+                    example: 'These credentials do not match our records.'
+        429:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Too many login attempts. Please try again in 60 seconds.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Too many login attempts. Please try again in 60 seconds.'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: "User's email address."
+                  example: john@example.com
+                password:
+                  type: string
+                  description: "User's password."
+                  example: password123
+              required:
+                - email
+                - password
+      security: []
+  /api/auth/user:
+    get:
+      summary: 'Get authenticated user'
+      operationId: getAuthenticatedUser
+      description: "Retrieve the currently authenticated user's profile information.\nRequires a valid Bearer token in the Authorization header."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 1
+                    name: 'John Doe'
+                    email: john@example.com
+                    email_verified_at: '2025-12-08T10:00:00.000000Z'
+                    created_at: '2025-12-08T09:00:00.000000Z'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john@example.com
+                      email_verified_at:
+                        type: string
+                        example: '2025-12-08T10:00:00.000000Z'
+                      created_at:
+                        type: string
+                        example: '2025-12-08T09:00:00.000000Z'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Authentication
+  /api/auth/logout:
+    post:
+      summary: 'Logout (current device)'
+      operationId: logoutcurrentDevice
+      description: "Revoke the current API token used for authentication.\nOther tokens for this user remain valid."
+      parameters: []
+      responses:
+        204:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {  }
+                properties: {  }
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Authentication
+  /api/auth/logout/all:
+    delete:
+      summary: 'Logout (all devices)'
+      operationId: logoutallDevices
+      description: "Revoke all API tokens for the authenticated user.\nThis will log the user out from all devices."
+      parameters: []
+      responses:
+        204:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {  }
+                properties: {  }
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Authentication
+  /api/auth/forgot-password:
+    post:
+      summary: 'Request password reset'
+      operationId: requestPasswordReset
+      description: "Send a password reset link to the user's email address.\nCheck MailHog (http://localhost:8025) in development to retrieve the token."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'We have emailed your password reset link!'
+                properties:
+                  message:
+                    type: string
+                    example: 'We have emailed your password reset link!'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "We can't find a user with that email address."
+                properties:
+                  message:
+                    type: string
+                    example: "We can't find a user with that email address."
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: "User's email address."
+                  example: john@example.com
+              required:
+                - email
+      security: []
+  /api/auth/reset-password:
+    post:
+      summary: 'Reset password'
+      operationId: resetPassword
+      description: "Reset the user's password using the token from the password reset email.\nPassword must be at least 8 characters and confirmed. Token expires after 60 minutes."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Your password has been reset!'
+                properties:
+                  message:
+                    type: string
+                    example: 'Your password has been reset!'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'This password reset token is invalid.'
+                properties:
+                  message:
+                    type: string
+                    example: 'This password reset token is invalid.'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The password confirmation does not match.'
+                  errors:
+                    password:
+                      - 'The password confirmation does not match.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The password confirmation does not match.'
+                  errors:
+                    type: object
+                    properties:
+                      password:
+                        type: array
+                        example:
+                          - 'The password confirmation does not match.'
+                        items:
+                          type: string
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: 'Password reset token from email.'
+                  example: abc123token456
+                email:
+                  type: string
+                  description: "User's email address."
+                  example: john@example.com
+                password:
+                  type: string
+                  description: 'New password. Minimum 8 characters.'
+                  example: newpassword123
+                password_confirmation:
+                  type: string
+                  description: 'Password confirmation. Must match password.'
+                  example: newpassword123
+              required:
+                - token
+                - email
+                - password
+                - password_confirmation
+      security: []

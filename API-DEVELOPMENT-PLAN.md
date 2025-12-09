@@ -2,8 +2,8 @@
 
 **Project:** Laravel REST API
 **Started:** 2025-12-07
-**Status:** ✅ Complete
-**Current Phase:** All Phases Complete | Production Ready
+**Status:** 🚧 In Progress - Phase 8
+**Current Phase:** Phase 8 - API Documentation
 
 ---
 
@@ -258,6 +258,128 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
   - Moved RateLimiter configuration to AppServiceProvider
   - Resolved "A facade root has not been set" fatal error
   - Status: ✅ Fixed and tested
+
+### Phase 8: API Documentation ✅
+
+- [x] **Install Scribe Laravel**
+  - Package: `knuckleswtf/scribe`
+  - Command: `./vendor/bin/sail composer require --dev knuckleswtf/scribe`
+  - Publish config: `./vendor/bin/sail artisan vendor:publish --tag=scribe-config`
+  - File created: `config/scribe.php`
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Configure environment variables**
+  - Add `API_BASE_URL=http://localhost/api` to `.env`
+  - Add `API_BASE_URL=http://example.com/api` to `.env.example`
+  - Add `SCRIBE_AUTH_ENABLED=true` to both files
+  - Add `SCRIBE_TEST_TOKEN=` to both files
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Update database seeder**
+  - File: `database/seeders/DatabaseSeeder.php`
+  - Add documentation access user: `jonathanrr839@gmail.com` (password: `12345678`)
+  - Use `User::firstOrCreate()` pattern
+  - Run seeder: `./vendor/bin/sail artisan db:seed`
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Configure Scribe**
+  - File: `config/scribe.php`
+  - Set title: "Laravel API Authentication Documentation"
+  - Set base URL: `env('API_BASE_URL', 'http://example.com/api')`
+  - Configure routes: match `api/auth/*` prefix
+  - Configure examples: bash, javascript, php (Next.js template deferred)
+  - Enable auth: Bearer token support
+  - Enable "Try It Out" feature
+  - Disable auto-add routes (manual route definition)
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Create authorization Gate**
+  - File: `app/Providers/AppServiceProvider.php`
+  - Add Gate definition in `boot()` method: `view-api-docs`
+  - Restrict to: `jonathanrr839@gmail.com`
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Create custom middleware**
+  - Command: `./vendor/bin/sail artisan make:middleware EnsureCanViewApiDocs`
+  - File: `app/Http/Middleware/EnsureCanViewApiDocs.php`
+  - Check Gate: `view-api-docs`
+  - Return 403 if unauthorized
+  - Register in `bootstrap/app.php` as `can.view.docs`
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Add protected documentation routes**
+  - File: `routes/web.php`
+  - Route: `GET /docs` (Scribe webpage)
+  - Route: `GET /docs.json` (Postman collection)
+  - Route: `GET /docs.openapi` (OpenAPI spec)
+  - Route: `GET /docs.postman` (Postman collection)
+  - Middleware: `auth`, `verified`, `can.view.docs`
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Create custom Next.js example template**
+  - File: `resources/views/partials/example-requests/nextjs.blade.php`
+  - Use Next.js App Router fetch pattern
+  - Include auth token handling
+  - Support GET, POST, PUT, PATCH, DELETE methods
+  - Note: Template created but disabled in config due to Scribe 5.x compatibility
+  - Status: ✅ Completed on 2025-12-08 (deferred for future troubleshooting)
+
+- [x] **Annotate all controllers with PHPDoc**
+  - Add `@group Authentication` to all 7 controllers
+  - Add `@bodyParam` for all request parameters
+  - Add `@response` examples for success (200/201) and errors (401/422/429)
+  - Add `@authenticated` tag where required
+  - Controllers annotated:
+    - `RegisterController` - @response 201, @response 422
+    - `LoginController` - @response 200, @response 401, @response 429
+    - `UserController` - @authenticated, @response 200, @response 401
+    - `LogoutController::destroy` - @authenticated, @response 204
+    - `LogoutController::destroyAll` - @authenticated, @response 204
+    - `PasswordResetController::sendResetLink` - @response 200, @response 400
+    - `PasswordResetController::reset` - @response 200, @response 400, @response 422
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Generate documentation**
+  - Command: `./vendor/bin/sail artisan scribe:generate`
+  - Verify output: `resources/views/scribe/` created (Laravel type)
+  - Verify Postman collection: `storage/app/private/scribe/collection.json` created
+  - Verify OpenAPI spec: `storage/app/private/scribe/openapi.yaml` created
+  - Status: ✅ Completed on 2025-12-08
+
+- [x] **Write documentation access tests**
+  - Command: `./vendor/bin/sail artisan make:test --pest ApiDocumentationTest`
+  - File: `tests/Feature/ApiDocumentationTest.php`
+  - Test authorized user can access `/docs`
+  - Test unauthorized user gets 403
+  - Test unauthenticated user redirects to login
+  - Test authorized user can access `/docs.json`
+  - Run tests: `./vendor/bin/sail artisan test --filter=ApiDocumentation`
+  - Status: ✅ All 4 tests passing
+
+- [ ] **Manual testing checklist**
+  - Login as `jonathanrr839@gmail.com`
+  - Navigate to `http://localhost/docs`
+  - Verify all 7 endpoints documented
+  - Verify code examples: curl, JavaScript, PHP
+  - Verify response examples display correctly
+  - Test "Try It Out" feature (if enabled)
+  - Logout and verify 403 on `/docs`
+  - Login as different user and verify 403
+  - Status: ⏳ Pending (requires browser access)
+
+- [x] **Run full test suite**
+  - Command: `./vendor/bin/sail artisan test`
+  - Expected: 94+ tests passing (90 existing + 4 new)
+  - Status: ✅ All 94 tests passing (307 assertions)
+
+- [x] **Run Laravel Pint formatter**
+  - Command: `./vendor/bin/sail pint --dirty`
+  - Status: ✅ 12 files formatted, 8 style issues fixed
+
+- [x] **Update project documentation**
+  - Update this document with Phase 8 completion status
+  - Update `SESSION-HANDOFF.md` with session summary
+  - Status: ✅ Completed on 2025-12-08
 
 ---
 
@@ -708,5 +830,5 @@ The following features are planned for future implementation:
 ---
 
 **Last Updated:** 2025-12-08
-**Project Status:** ✅ **COMPLETE - ALL PHASES FINISHED**
-**Next Steps:** None - Project ready for production deployment
+**Project Status:** 🚧 **IN PROGRESS - PHASE 8**
+**Next Steps:** Implement comprehensive API documentation with Scribe Laravel

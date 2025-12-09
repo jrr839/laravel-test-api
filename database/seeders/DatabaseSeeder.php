@@ -23,5 +23,15 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        // Documentation access user
+        User::firstOrCreate(
+            ['email' => 'jonathanrr839@gmail.com'],
+            [
+                'name' => 'Jonathan Rodriguez',
+                'password' => '12345678',
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }
