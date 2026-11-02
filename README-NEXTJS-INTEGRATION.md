@@ -111,7 +111,7 @@ Download the OpenAPI specification from your running Laravel API:
 curl http://localhost/docs.openapi -o openapi.yaml
 ```
 
-📝 **Note:** The OpenAPI spec is available at `/docs.openapi` when you're authenticated with the documentation user (jonathanrr839@gmail.com).
+📝 **Note:** The OpenAPI spec is available at `/docs.openapi` when you're logged in with an email listed in `DOCS_ALLOWED_EMAILS`.
 
 ### Step 4: Generate Types
 

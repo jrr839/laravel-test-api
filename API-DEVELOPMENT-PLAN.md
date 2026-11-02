@@ -277,7 +277,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
 
 - [x] **Update database seeder**
   - File: `database/seeders/DatabaseSeeder.php`
-  - Add documentation access user: `jonathanrr839@gmail.com` (password: `12345678`)
+  - Add documentation access user: the docs user
   - Use `User::firstOrCreate()` pattern
   - Run seeder: `./vendor/bin/sail artisan db:seed`
   - Status: ✅ Completed on 2025-12-08
@@ -296,7 +296,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
 - [x] **Create authorization Gate**
   - File: `app/Providers/AppServiceProvider.php`
   - Add Gate definition in `boot()` method: `view-api-docs`
-  - Restrict to: `jonathanrr839@gmail.com`
+  - Restrict to: the docs user
   - Status: ✅ Completed on 2025-12-08
 
 - [x] **Create custom middleware**
@@ -357,7 +357,7 @@ Building a complete REST API authentication system using Laravel Sanctum for tok
   - Status: ✅ All 4 tests passing
 
 - [ ] **Manual testing checklist**
-  - Login as `jonathanrr839@gmail.com`
+  - Login as the docs user
   - Navigate to `http://localhost/docs`
   - Verify all 7 endpoints documented
   - Verify code examples: curl, JavaScript, PHP

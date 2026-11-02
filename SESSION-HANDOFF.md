@@ -16,7 +16,7 @@
 
 - ✅ **All 8 phases completed** (including Phase 8: API Documentation)
 - ✅ **94 Pest tests passing** (307 assertions)
-- ✅ **API documentation accessible at /docs** (protected, jonathanrr839@gmail.com only)
+- ✅ **API documentation accessible at /docs** (protected, the docs user only)
 - ✅ **Postman collection created and tested**
 - ✅ **All API endpoints functional and documented**
 - ✅ **Code properly formatted** (Pint)
@@ -55,8 +55,8 @@
    - Updated .env.example with same variables
 
 3. ✅ Updated database seeder with documentation user:
-   - Added `jonathanrr839@gmail.com` user to DatabaseSeeder.php
-   - Password: `12345678`, email verified
+   - Added the docs user user to DatabaseSeeder.php
+   - Password: <removed>, email verified
    - Ran seeder to create user
 
 4. ✅ Configured Scribe in config/scribe.php:
@@ -69,7 +69,7 @@
    - Configured static type: laravel (generates Blade views)
 
 5. ✅ Created authorization Gate in AppServiceProvider:
-   - Added `view-api-docs` Gate that checks email === 'jonathanrr839@gmail.com'
+   - Added `view-api-docs` Gate that checks against the allowed email
    - Gate defined in `boot()` method
 
 6. ✅ Created custom middleware EnsureCanViewApiDocs:
@@ -143,7 +143,7 @@
 - ✅ Beautiful, responsive HTML documentation
 
 **Access Control:**
-- ✅ Documentation accessible ONLY to `jonathanrr839@gmail.com`
+- ✅ Documentation accessible ONLY to the docs user
 - ✅ Requires web authentication (Fortify)
 - ✅ Gate-based authorization
 - ✅ Custom middleware for route protection
@@ -164,7 +164,7 @@
    - Can be enabled later with further troubleshooting
 
 2. **Manual Testing ✅ COMPLETED**:
-   - ✅ Login as jonathanrr839@gmail.com works
+   - ✅ Login as the docs user works
    - ✅ Navigate to http://localhost/docs - documentation loads correctly
    - ✅ All 7 endpoints visible and documented
    - ✅ Code examples render correctly (3 languages: bash, JavaScript, PHP)
@@ -203,7 +203,7 @@ Optional future enhancements:
 
 - ✅ `.env` - Added API_BASE_URL, SCRIBE_AUTH_ENABLED, SCRIBE_TEST_TOKEN
 - ✅ `.env.example` - Added API_BASE_URL, SCRIBE_AUTH_ENABLED, SCRIBE_TEST_TOKEN
-- ✅ `database/seeders/DatabaseSeeder.php` - Added jonathanrr839@gmail.com user
+- ✅ `database/seeders/DatabaseSeeder.php` - Added the docs user user
 - ✅ `app/Providers/AppServiceProvider.php` - Added view-api-docs Gate definition
 - ✅ `bootstrap/app.php` - Registered can.view.docs middleware alias
 - ✅ `routes/web.php` - Added 4 protected documentation routes, updated to serve static HTML files (UI fix)
