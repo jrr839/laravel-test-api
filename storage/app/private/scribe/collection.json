@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Authentication Documentation",
-        "_postman_id": "3cee1cd4-3bc5-4cf2-a846-8d74d200ed6a",
+        "_postman_id": "e7def609-1dae-4602-aeab-c4f5c9276dc5",
         "description": "REST API endpoints for user authentication using Laravel Sanctum. Includes user registration, login, profile access, logout, and password recovery.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -24,9 +24,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/register",
+                            "path": "api\/v1\/auth\/register",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/register"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
                         },
                         "method": "POST",
                         "header": [
@@ -68,9 +68,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/login",
+                            "path": "api\/v1\/auth\/login",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/login"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
                         },
                         "method": "POST",
                         "header": [
@@ -118,9 +118,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/user",
+                            "path": "api\/v1\/auth\/user",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/user"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/user"
                         },
                         "method": "GET",
                         "header": [
@@ -156,9 +156,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/logout",
+                            "path": "api\/v1\/auth\/logout",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/logout"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
                         },
                         "method": "POST",
                         "header": [
@@ -194,9 +194,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/logout\/all",
+                            "path": "api\/v1\/auth\/logout\/all",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/logout\/all"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout\/all"
                         },
                         "method": "DELETE",
                         "header": [
@@ -232,9 +232,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/forgot-password",
+                            "path": "api\/v1\/auth\/forgot-password",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/forgot-password"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/forgot-password"
                         },
                         "method": "POST",
                         "header": [
@@ -276,9 +276,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/auth\/reset-password",
+                            "path": "api\/v1\/auth\/reset-password",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/reset-password"
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/reset-password"
                         },
                         "method": "POST",
                         "header": [

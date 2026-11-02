@@ -3,7 +3,7 @@
 use App\Models\User;
 
 test('users can register with valid credentials', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password123',
@@ -41,7 +41,7 @@ test('users can register with valid credentials', function () {
 });
 
 test('registration requires a name', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'email' => 'test@example.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -52,7 +52,7 @@ test('registration requires a name', function () {
 });
 
 test('registration requires an email', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -63,7 +63,7 @@ test('registration requires an email', function () {
 });
 
 test('registration requires a valid email format', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'invalid-email',
         'password' => 'password123',
@@ -77,7 +77,7 @@ test('registration requires a valid email format', function () {
 test('registration requires a unique email', function () {
     User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password123',
@@ -89,7 +89,7 @@ test('registration requires a unique email', function () {
 });
 
 test('registration requires a password', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
     ]);
@@ -99,7 +99,7 @@ test('registration requires a password', function () {
 });
 
 test('registration requires password confirmation', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password123',
@@ -111,7 +111,7 @@ test('registration requires password confirmation', function () {
 });
 
 test('registration requires minimum password length', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'short',
@@ -123,7 +123,7 @@ test('registration requires minimum password length', function () {
 });
 
 test('registration requires lowercase email', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'TEST@EXAMPLE.COM',
         'password' => 'password123',
@@ -135,7 +135,7 @@ test('registration requires lowercase email', function () {
 });
 
 test('registration token can be used to authenticate', function () {
-    $response = $this->postJson('/api/auth/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password123',
@@ -145,7 +145,7 @@ test('registration token can be used to authenticate', function () {
     $token = $response->json('data.token');
 
     $authResponse = $this->withHeader('Authorization', 'Bearer '.$token)
-        ->getJson('/api/user');
+        ->getJson('/api/v1/user');
 
     $authResponse->assertOk()
         ->assertJson([

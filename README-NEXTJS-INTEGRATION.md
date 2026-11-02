@@ -49,7 +49,7 @@ This guide demonstrates how to build a **type-safe Next.js frontend** that consu
 - Node.js 18+ and npm/pnpm/yarn
 - TypeScript 5+
 - Next.js 14+ (App Router)
-- Running Laravel API at `http://localhost/api`
+- Running Laravel API at `http://localhost/api/v1`
 
 **Knowledge:**
 - Basic TypeScript and React
@@ -72,13 +72,13 @@ Your Laravel API provides 7 authentication endpoints:
 
 | Endpoint | Method | Auth | Purpose |
 |----------|--------|------|---------|
-| `/api/auth/register` | POST | No | Create new user account |
-| `/api/auth/login` | POST | No | Authenticate and get token |
-| `/api/auth/user` | GET | Yes | Get authenticated user |
-| `/api/auth/logout` | POST | Yes | Revoke current token |
-| `/api/auth/logout/all` | DELETE | Yes | Revoke all user tokens |
-| `/api/auth/forgot-password` | POST | No | Send password reset email |
-| `/api/auth/reset-password` | POST | No | Reset password with token |
+| `/api/v1/auth/register` | POST | No | Create new user account |
+| `/api/v1/auth/login` | POST | No | Authenticate and get token |
+| `/api/v1/auth/user` | GET | Yes | Get authenticated user |
+| `/api/v1/auth/logout` | POST | Yes | Revoke current token |
+| `/api/v1/auth/logout/all` | DELETE | Yes | Revoke all user tokens |
+| `/api/v1/auth/forgot-password` | POST | No | Send password reset email |
+| `/api/v1/auth/reset-password` | POST | No | Reset password with token |
 
 ---
 
@@ -131,7 +131,7 @@ Create `lib/api-client.ts`:
 
 ```typescript
 // lib/api-client.ts
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api/v1'
 
 export async function apiClient<T>(
   path: string,
@@ -171,7 +171,7 @@ Create `app/test/page.tsx`:
 import { apiClient } from '@/lib/api-client'
 import type { paths } from '@/lib/api-types'
 
-type LoginResponse = paths['/api/auth/login']['post']['responses']['200']['content']['application/json']
+type LoginResponse = paths['/api/v1/auth/login']['post']['responses']['200']['content']['application/json']
 
 export default async function TestPage() {
   try {
@@ -200,7 +200,7 @@ export default async function TestPage() {
 Create `.env.local`:
 
 ```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost/api
+NEXT_PUBLIC_API_BASE_URL=http://localhost/api/v1
 ```
 
 ### Step 8: Run Your App
@@ -235,7 +235,7 @@ const http = require('http')
 const fs = require('fs')
 
 const OPENAPI_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-  ? `${process.env.NEXT_PUBLIC_API_BASE_URL.replace('/api', '')}/docs.openapi`
+  ? `${process.env.NEXT_PUBLIC_API_BASE_URL.replace(/\/api\/v1$/, '')}/docs.openapi`
   : 'http://localhost/docs.openapi'
 
 console.log(`📥 Fetching OpenAPI spec from ${OPENAPI_URL}...`)
@@ -380,9 +380,9 @@ export type ErrorResponse<
   : never
 
 // Usage examples:
-// type LoginRequest = RequestBody<'/api/auth/login', 'post'>
-// type LoginSuccess = SuccessResponse<'/api/auth/login', 'post'>
-// type LoginError = ErrorResponse<'/api/auth/login', 'post', 401>
+// type LoginRequest = RequestBody<'/api/v1/auth/login', 'post'>
+// type LoginSuccess = SuccessResponse<'/api/v1/auth/login', 'post'>
+// type LoginError = ErrorResponse<'/api/v1/auth/login', 'post', 401>
 ```
 
 ---
@@ -398,7 +398,7 @@ Create `lib/api-client.ts`:
 ```typescript
 // lib/api-client.ts
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost/api/v1'
 
 /**
  * Custom error class for API errors
@@ -705,8 +705,8 @@ export const authService = {
    * Register a new user
    */
   async register(
-    data: RequestBody<'/api/auth/register', 'post'>
-  ): Promise<SuccessResponse<'/api/auth/register', 'post'>> {
+    data: RequestBody<'/api/v1/auth/register', 'post'>
+  ): Promise<SuccessResponse<'/api/v1/auth/register', 'post'>> {
     return api.post('/auth/register', data)
   },
 
@@ -714,8 +714,8 @@ export const authService = {
    * Login with email and password
    */
   async login(
-    credentials: RequestBody<'/api/auth/login', 'post'>
-  ): Promise<SuccessResponse<'/api/auth/login', 'post'>> {
+    credentials: RequestBody<'/api/v1/auth/login', 'post'>
+  ): Promise<SuccessResponse<'/api/v1/auth/login', 'post'>> {
     return api.post('/auth/login', credentials)
   },
 
@@ -724,7 +724,7 @@ export const authService = {
    */
   async getUser(
     token?: string
-  ): Promise<SuccessResponse<'/api/auth/user', 'get'>> {
+  ): Promise<SuccessResponse<'/api/v1/auth/user', 'get'>> {
     return api.get('/auth/user', { token })
   },
 
@@ -746,8 +746,8 @@ export const authService = {
    * Request password reset email
    */
   async forgotPassword(
-    data: RequestBody<'/api/auth/forgot-password', 'post'>
-  ): Promise<SuccessResponse<'/api/auth/forgot-password', 'post'>> {
+    data: RequestBody<'/api/v1/auth/forgot-password', 'post'>
+  ): Promise<SuccessResponse<'/api/v1/auth/forgot-password', 'post'>> {
     return api.post('/auth/forgot-password', data)
   },
 
@@ -755,8 +755,8 @@ export const authService = {
    * Reset password with token
    */
   async resetPassword(
-    data: RequestBody<'/api/auth/reset-password', 'post'>
-  ): Promise<SuccessResponse<'/api/auth/reset-password', 'post'>> {
+    data: RequestBody<'/api/v1/auth/reset-password', 'post'>
+  ): Promise<SuccessResponse<'/api/v1/auth/reset-password', 'post'>> {
     return api.post('/auth/reset-password', data)
   },
 }
@@ -784,7 +784,7 @@ import { getAuthToken, removeAuthToken, setAuthToken } from '@/lib/token-storage
 import { useRouter } from 'next/navigation'
 import type { SuccessResponse } from '@/lib/api-type-helpers'
 
-type User = SuccessResponse<'/api/auth/user', 'get'>['data']
+type User = SuccessResponse<'/api/v1/auth/user', 'get'>['data']
 
 interface AuthContextType {
   user: User | null
@@ -1012,7 +1012,7 @@ import { getAuthToken } from './token-storage'
 import { authService } from './api-service'
 import type { SuccessResponse } from './api-type-helpers'
 
-type User = SuccessResponse<'/api/auth/user', 'get'>['data']
+type User = SuccessResponse<'/api/v1/auth/user', 'get'>['data']
 
 /**
  * Require authentication - redirect to login if not authenticated
@@ -1111,7 +1111,7 @@ export default async function ProfilePage() {
 // app/profile/profile-display.tsx
 import type { SuccessResponse } from '@/lib/api-type-helpers'
 
-type User = SuccessResponse<'/api/auth/user', 'get'>['data']
+type User = SuccessResponse<'/api/v1/auth/user', 'get'>['data']
 
 export function ProfileDisplay({ user }: { user: User }) {
   return (
@@ -2521,7 +2521,7 @@ export default function ResetPasswordClientPage() {
 2. **Always use HTTPS in production** - Prevents man-in-the-middle attacks
    ```env
    # Production .env
-   NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api
+   NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api/v1
    ```
 
 3. **Enable CSRF protection** - Laravel Sanctum handles this automatically
@@ -2634,10 +2634,10 @@ try {
 
 ```env
 # .env.local (Development)
-NEXT_PUBLIC_API_BASE_URL=http://localhost/api
+NEXT_PUBLIC_API_BASE_URL=http://localhost/api/v1
 
 # .env.production (Production)
-NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api
+NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api/v1
 ```
 
 ⚠️ **Important:** Variables prefixed with `NEXT_PUBLIC_` are exposed to the browser. Never put secrets in them!
@@ -2662,7 +2662,7 @@ npm run dev
 ```
 
 **Access URLs:**
-- Laravel API: http://localhost/api
+- Laravel API: http://localhost/api/v1
 - Laravel Docs: http://localhost/docs
 - Next.js App: http://localhost:3000
 
@@ -2742,7 +2742,7 @@ When you modify the Laravel API:
 
 ```env
 # Next.js Production (.env.production)
-NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api
+NEXT_PUBLIC_API_BASE_URL=https://api.yourdomain.com/api/v1
 NEXT_PUBLIC_APP_URL=https://yourdomain.com
 ```
 
@@ -2828,13 +2828,13 @@ Sentry.init({
 
 | Endpoint | Method | Auth Required | Success | Error Codes |
 |----------|--------|---------------|---------|-------------|
-| `/api/auth/register` | POST | No | 201 | 422 |
-| `/api/auth/login` | POST | No | 200 | 401, 429 |
-| `/api/auth/user` | GET | Yes | 200 | 401 |
-| `/api/auth/logout` | POST | Yes | 204 | 401 |
-| `/api/auth/logout/all` | DELETE | Yes | 204 | 401 |
-| `/api/auth/forgot-password` | POST | No | 200 | 400 |
-| `/api/auth/reset-password` | POST | No | 200 | 400, 422 |
+| `/api/v1/auth/register` | POST | No | 201 | 422 |
+| `/api/v1/auth/login` | POST | No | 200 | 401, 429 |
+| `/api/v1/auth/user` | GET | Yes | 200 | 401 |
+| `/api/v1/auth/logout` | POST | Yes | 204 | 401 |
+| `/api/v1/auth/logout/all` | DELETE | Yes | 204 | 401 |
+| `/api/v1/auth/forgot-password` | POST | No | 200 | 400 |
+| `/api/v1/auth/reset-password` | POST | No | 200 | 400, 422 |
 
 ### HTTP Status Codes
 
@@ -2874,7 +2874,7 @@ type AuthResponse = {
   }
 }
 
-// User response (GET /api/auth/user)
+// User response (GET /api/v1/auth/user)
 type UserResponse = {
   data: User
 }
@@ -2891,9 +2891,9 @@ type MessageResponse = {
 }
 
 // Type helpers
-type LoginRequest = RequestBody<'/api/auth/login', 'post'>
-type LoginSuccess = SuccessResponse<'/api/auth/login', 'post'>
-type RegisterRequest = RequestBody<'/api/auth/register', 'post'>
+type LoginRequest = RequestBody<'/api/v1/auth/login', 'post'>
+type LoginSuccess = SuccessResponse<'/api/v1/auth/login', 'post'>
+type RegisterRequest = RequestBody<'/api/v1/auth/register', 'post'>
 ```
 
 ### Troubleshooting Common Issues

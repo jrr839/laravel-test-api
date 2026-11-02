@@ -7,7 +7,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/register
+    uri: api/v1/auth/register
     metadata:
       custom: []
       groupName: Authentication
@@ -121,7 +121,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/login
+    uri: api/v1/auth/login
     metadata:
       custom: []
       groupName: Authentication
@@ -223,7 +223,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/auth/user
+    uri: api/v1/auth/user
     metadata:
       custom: []
       groupName: Authentication
@@ -286,7 +286,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/logout
+    uri: api/v1/auth/logout
     metadata:
       custom: []
       groupName: Authentication
@@ -340,7 +340,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: api/auth/logout/all
+    uri: api/v1/auth/logout/all
     metadata:
       custom: []
       groupName: Authentication
@@ -394,7 +394,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/forgot-password
+    uri: api/v1/auth/forgot-password
     metadata:
       custom: []
       groupName: Authentication
@@ -459,7 +459,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/reset-password
+    uri: api/v1/auth/reset-password
     metadata:
       custom: []
       groupName: Authentication

@@ -9,7 +9,7 @@ test('users can login with valid credentials', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'password123',
     ]);
@@ -40,7 +40,7 @@ test('users can login with valid credentials', function () {
 });
 
 test('login requires an email', function () {
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'password' => 'password123',
     ]);
 
@@ -49,7 +49,7 @@ test('login requires an email', function () {
 });
 
 test('login requires a password', function () {
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
     ]);
 
@@ -58,7 +58,7 @@ test('login requires a password', function () {
 });
 
 test('login requires a valid email format', function () {
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'invalid-email',
         'password' => 'password123',
     ]);
@@ -73,7 +73,7 @@ test('login fails with invalid credentials', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'wrong-password',
     ]);
@@ -83,7 +83,7 @@ test('login fails with invalid credentials', function () {
 });
 
 test('login fails with non-existent email', function () {
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'nonexistent@example.com',
         'password' => 'password123',
     ]);
@@ -98,7 +98,7 @@ test('login token can be used to authenticate', function () {
         'password' => Hash::make('password123'),
     ]);
 
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'password123',
     ]);
@@ -106,7 +106,7 @@ test('login token can be used to authenticate', function () {
     $token = $response->json('data.token');
 
     $authResponse = $this->withHeader('Authorization', 'Bearer '.$token)
-        ->getJson('/api/user');
+        ->getJson('/api/v1/user');
 
     $authResponse->assertOk()
         ->assertJson([
@@ -122,14 +122,14 @@ test('login is rate limited after multiple failed attempts', function () {
 
     // Make 5 failed login attempts
     for ($i = 0; $i < 5; $i++) {
-        $this->postJson('/api/auth/login', [
+        $this->postJson('/api/v1/auth/login', [
             'email' => 'test@example.com',
             'password' => 'wrong-password',
         ]);
     }
 
     // The 6th attempt should be rate limited
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'wrong-password',
     ]);
@@ -139,4 +139,9 @@ test('login is rate limited after multiple failed attempts', function () {
 
     // Verify the error message mentions throttling
     expect($response->json('errors.email.0'))->toContain('Too many');
+});
+
+it('is only available under the versioned api prefix', function () {
+    $this->postJson('/api/v1/auth/login', [])->assertUnprocessable();
+    $this->postJson('/api/auth/login', [])->assertNotFound();
 });

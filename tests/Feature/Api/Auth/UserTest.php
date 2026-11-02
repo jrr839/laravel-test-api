@@ -11,7 +11,7 @@ test('authenticated users can retrieve their profile', function () {
 
     Sanctum::actingAs($user);
 
-    $response = $this->getJson('/api/auth/user');
+    $response = $this->getJson('/api/v1/auth/user');
 
     $response->assertOk()
         ->assertJsonStructure([
@@ -33,14 +33,14 @@ test('authenticated users can retrieve their profile', function () {
 });
 
 test('unauthenticated users cannot access the user endpoint', function () {
-    $response = $this->getJson('/api/auth/user');
+    $response = $this->getJson('/api/v1/auth/user');
 
     $response->assertUnauthorized();
 });
 
 test('user endpoint requires a valid token', function () {
     $response = $this->withHeader('Authorization', 'Bearer invalid-token')
-        ->getJson('/api/auth/user');
+        ->getJson('/api/v1/auth/user');
 
     $response->assertUnauthorized();
 });
@@ -52,7 +52,7 @@ test('user profile can be accessed with login token', function () {
     ]);
 
     // Login to get a token
-    $loginResponse = $this->postJson('/api/auth/login', [
+    $loginResponse = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'password123',
     ]);
@@ -61,7 +61,7 @@ test('user profile can be accessed with login token', function () {
 
     // Use the token to access the user profile
     $response = $this->withHeader('Authorization', 'Bearer '.$token)
-        ->getJson('/api/auth/user');
+        ->getJson('/api/v1/auth/user');
 
     $response->assertOk()
         ->assertJson([
@@ -77,7 +77,7 @@ test('user profile returns correct data structure', function () {
 
     Sanctum::actingAs($user);
 
-    $response = $this->getJson('/api/auth/user');
+    $response = $this->getJson('/api/v1/auth/user');
 
     $response->assertOk();
 

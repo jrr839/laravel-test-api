@@ -33,7 +33,7 @@ return [
         [
             'match' => [
                 // Match only routes whose paths match this pattern (use * as a wildcard to match any characters). Example: 'users/*'.
-                'prefixes' => ['api/auth/*'],
+                'prefixes' => ['api/v1/auth/*'],
 
                 // Match only routes whose domains match this pattern (use * as a wildcard to match any characters). Example: 'api.*'.
                 'domains' => ['*'],
@@ -126,7 +126,7 @@ return [
         'placeholder' => '{YOUR_TOKEN_HERE}',
 
         // Any extra authentication-related info for your users. Markdown and HTML are supported.
-        'extra_info' => 'You can retrieve your API token by logging in via <code>POST /api/auth/login</code> or registering via <code>POST /api/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.',
+        'extra_info' => 'You can retrieve your API token by logging in via <code>POST /api/v1/auth/login</code> or registering via <code>POST /api/v1/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.',
     ],
 
     // Example requests for each endpoint will be shown in each of these languages.

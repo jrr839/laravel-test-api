@@ -15,12 +15,12 @@ components:
     default:
       type: http
       scheme: bearer
-      description: 'You can retrieve your API token by logging in via <code>POST /api/auth/login</code> or registering via <code>POST /api/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.'
+      description: 'You can retrieve your API token by logging in via <code>POST /api/v1/auth/login</code> or registering via <code>POST /api/v1/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.'
 security:
   -
     default: []
 paths:
-  /api/auth/register:
+  /api/v1/auth/register:
     post:
       summary: 'Register a new user'
       operationId: registerANewUser
@@ -126,7 +126,7 @@ paths:
                 - password
                 - password_confirmation
       security: []
-  /api/auth/login:
+  /api/v1/auth/login:
     post:
       summary: 'User login'
       operationId: userLogin
@@ -246,7 +246,7 @@ paths:
                 - email
                 - password
       security: []
-  /api/auth/user:
+  /api/v1/auth/user:
     get:
       summary: 'Get authenticated user'
       operationId: getAuthenticatedUser
@@ -299,7 +299,7 @@ paths:
                     example: Unauthenticated.
       tags:
         - Authentication
-  /api/auth/logout:
+  /api/v1/auth/logout:
     post:
       summary: 'Logout (current device)'
       operationId: logoutcurrentDevice
@@ -328,7 +328,7 @@ paths:
                     example: Unauthenticated.
       tags:
         - Authentication
-  /api/auth/logout/all:
+  /api/v1/auth/logout/all:
     delete:
       summary: 'Logout (all devices)'
       operationId: logoutallDevices
@@ -357,7 +357,7 @@ paths:
                     example: Unauthenticated.
       tags:
         - Authentication
-  /api/auth/forgot-password:
+  /api/v1/auth/forgot-password:
     post:
       summary: 'Request password reset'
       operationId: requestPasswordReset
@@ -404,7 +404,7 @@ paths:
               required:
                 - email
       security: []
-  /api/auth/reset-password:
+  /api/v1/auth/reset-password:
     post:
       summary: 'Reset password'
       operationId: resetPassword
