@@ -22,18 +22,18 @@ return [
 
         <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
         You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
-    INTRO,
+        INTRO,
 
-    // The base URL displayed in the docs.
+    // The base URL displayed in the docs. Route URIs already start with `api/`, so this must not include it.
     // If you're using `laravel` type, you can set this to a dynamic string, like '{{ config("app.tenant_url") }}' to get a dynamic base URL.
-    'base_url' => env('API_BASE_URL', 'http://example.com/api'),
+    'base_url' => env('API_BASE_URL', 'http://localhost'),
 
     // Routes to include in the docs
     'routes' => [
         [
             'match' => [
                 // Match only routes whose paths match this pattern (use * as a wildcard to match any characters). Example: 'users/*'.
-                'prefixes' => ['api/auth/*'],
+                'prefixes' => ['api/v1/auth/*'],
 
                 // Match only routes whose domains match this pattern (use * as a wildcard to match any characters). Example: 'api.*'.
                 'domains' => ['*'],
@@ -55,7 +55,7 @@ return [
     // - "static" will generate a static HTMl page in the /public/docs folder,
     // - "laravel" will generate the documentation as a Blade view, so you can add routing and authentication.
     // - "external_static" and "external_laravel" do the same as above, but pass the OpenAPI spec as a URL to an external UI template
-    'type' => 'static',
+    'type' => 'laravel',
 
     // See https://scribe.knuckles.wtf/laravel/reference/config#theme for supported options
     'theme' => 'default',
@@ -93,7 +93,7 @@ return [
         'enabled' => true,
 
         // The base URL to use in the API tester. Leave as null to be the same as the displayed URL (`scribe.base_url`).
-        'base_url' => env('API_BASE_URL', 'http://localhost/api'),
+        'base_url' => null,
 
         // [Laravel Sanctum] Fetch a CSRF token before each request, and add it as an X-XSRF-TOKEN header.
         'use_csrf' => false,
@@ -126,7 +126,7 @@ return [
         'placeholder' => '{YOUR_TOKEN_HERE}',
 
         // Any extra authentication-related info for your users. Markdown and HTML are supported.
-        'extra_info' => 'You can retrieve your API token by logging in via <code>POST /api/auth/login</code> or registering via <code>POST /api/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.',
+        'extra_info' => 'You can retrieve your API token by logging in via <code>POST /api/v1/auth/login</code> or registering via <code>POST /api/v1/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.',
     ],
 
     // Example requests for each endpoint will be shown in each of these languages.

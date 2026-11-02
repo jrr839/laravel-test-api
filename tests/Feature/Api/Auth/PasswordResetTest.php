@@ -11,7 +11,7 @@ test('users can request a password reset link', function () {
 
     $user = User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->postJson('/api/auth/forgot-password', [
+    $response = $this->postJson('/api/v1/auth/forgot-password', [
         'email' => 'test@example.com',
     ]);
 
@@ -24,14 +24,14 @@ test('users can request a password reset link', function () {
 });
 
 test('forgot password requires an email', function () {
-    $response = $this->postJson('/api/auth/forgot-password', []);
+    $response = $this->postJson('/api/v1/auth/forgot-password', []);
 
     $response->assertUnprocessable()
         ->assertJsonValidationErrors(['email']);
 });
 
 test('forgot password requires a valid email format', function () {
-    $response = $this->postJson('/api/auth/forgot-password', [
+    $response = $this->postJson('/api/v1/auth/forgot-password', [
         'email' => 'invalid-email',
     ]);
 
@@ -40,7 +40,7 @@ test('forgot password requires a valid email format', function () {
 });
 
 test('forgot password returns error for non-existent email', function () {
-    $response = $this->postJson('/api/auth/forgot-password', [
+    $response = $this->postJson('/api/v1/auth/forgot-password', [
         'email' => 'nonexistent@example.com',
     ]);
 
@@ -58,7 +58,7 @@ test('users can reset their password with valid token', function () {
 
     $token = Password::createToken($user);
 
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'new-password',
@@ -76,7 +76,7 @@ test('users can reset their password with valid token', function () {
 });
 
 test('reset password requires a token', function () {
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'email' => 'test@example.com',
         'password' => 'new-password',
         'password_confirmation' => 'new-password',
@@ -87,7 +87,7 @@ test('reset password requires a token', function () {
 });
 
 test('reset password requires an email', function () {
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => 'some-token',
         'password' => 'new-password',
         'password_confirmation' => 'new-password',
@@ -98,7 +98,7 @@ test('reset password requires an email', function () {
 });
 
 test('reset password requires a password', function () {
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => 'some-token',
         'email' => 'test@example.com',
         'password_confirmation' => 'new-password',
@@ -109,7 +109,7 @@ test('reset password requires a password', function () {
 });
 
 test('reset password requires password confirmation', function () {
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => 'some-token',
         'email' => 'test@example.com',
         'password' => 'new-password',
@@ -123,7 +123,7 @@ test('reset password requires matching password confirmation', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'new-password',
@@ -138,7 +138,7 @@ test('reset password requires minimum 8 characters', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'short',
@@ -152,7 +152,7 @@ test('reset password requires minimum 8 characters', function () {
 test('reset password fails with invalid token', function () {
     User::factory()->create(['email' => 'test@example.com']);
 
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => 'invalid-token',
         'email' => 'test@example.com',
         'password' => 'new-password',
@@ -169,7 +169,7 @@ test('reset password fails with wrong email', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
     $token = Password::createToken($user);
 
-    $response = $this->postJson('/api/auth/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'wrong@example.com',
         'password' => 'new-password',
@@ -188,7 +188,7 @@ test('users can login with new password after reset', function () {
     $token = Password::createToken($user);
 
     // Reset password
-    $this->postJson('/api/auth/reset-password', [
+    $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'new-password',
@@ -196,7 +196,7 @@ test('users can login with new password after reset', function () {
     ]);
 
     // Login with new password
-    $response = $this->postJson('/api/auth/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => 'test@example.com',
         'password' => 'new-password',
     ]);
@@ -214,7 +214,7 @@ test('users can login with new password after reset', function () {
 test('password reset token is stored in database', function () {
     $user = User::factory()->create(['email' => 'test@example.com']);
 
-    $this->postJson('/api/auth/forgot-password', [
+    $this->postJson('/api/v1/auth/forgot-password', [
         'email' => 'test@example.com',
     ]);
 
@@ -237,7 +237,7 @@ test('password reset token is removed after successful reset', function () {
     ]);
 
     // Reset password
-    $this->postJson('/api/auth/reset-password', [
+    $this->postJson('/api/v1/auth/reset-password', [
         'token' => $token,
         'email' => 'test@example.com',
         'password' => 'new-password',

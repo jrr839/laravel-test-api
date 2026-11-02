@@ -27,7 +27,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost/api";
+        var tryItOutBaseUrl = "http://localhost";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -73,26 +73,26 @@
                     <a href="#authentication">Authentication</a>
                 </li>
                                     <ul id="tocify-subheader-authentication" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="authentication-POSTapi-auth-register">
-                                <a href="#authentication-POSTapi-auth-register">Register a new user</a>
+                                                    <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-register">
+                                <a href="#authentication-POSTapi-v1-auth-register">Register a new user</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-auth-login">
-                                <a href="#authentication-POSTapi-auth-login">User login</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-login">
+                                <a href="#authentication-POSTapi-v1-auth-login">User login</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-GETapi-auth-user">
-                                <a href="#authentication-GETapi-auth-user">Get authenticated user</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-GETapi-v1-auth-user">
+                                <a href="#authentication-GETapi-v1-auth-user">Get authenticated user</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-auth-logout">
-                                <a href="#authentication-POSTapi-auth-logout">Logout (current device)</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-logout">
+                                <a href="#authentication-POSTapi-v1-auth-logout">Logout (current device)</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-DELETEapi-auth-logout-all">
-                                <a href="#authentication-DELETEapi-auth-logout-all">Logout (all devices)</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-DELETEapi-v1-auth-logout-all">
+                                <a href="#authentication-DELETEapi-v1-auth-logout-all">Logout (all devices)</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-auth-forgot-password">
-                                <a href="#authentication-POSTapi-auth-forgot-password">Request password reset</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-forgot-password">
+                                <a href="#authentication-POSTapi-v1-auth-forgot-password">Request password reset</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-auth-reset-password">
-                                <a href="#authentication-POSTapi-auth-reset-password">Reset password</a>
+                                                                                <li class="tocify-item level-2" data-unique="authentication-POSTapi-v1-auth-reset-password">
+                                <a href="#authentication-POSTapi-v1-auth-reset-password">Reset password</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -105,7 +105,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 9, 2025</li>
+        <li>Last updated: November 2, 2026</li>
     </ul>
 </div>
 
@@ -115,23 +115,22 @@
         <h1 id="introduction">Introduction</h1>
 <p>REST API endpoints for user authentication using Laravel Sanctum. Includes user registration, login, profile access, logout, and password recovery.</p>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost/api</code>
+    <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
-<pre><code>This documentation aims to provide all the information you need to work with our API.
-
-&lt;aside&gt;As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
-You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).&lt;/aside&gt;</code></pre>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_TOKEN_HERE}"</code></strong>.</p>
 <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
-<p>You can retrieve your API token by logging in via <code>POST /api/auth/login</code> or registering via <code>POST /api/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.</p>
+<p>You can retrieve your API token by logging in via <code>POST /api/v1/auth/login</code> or registering via <code>POST /api/v1/auth/register</code>. The token should be sent in the <code>Authorization</code> header with the <code>Bearer</code> prefix.</p>
 
         <h1 id="authentication">Authentication</h1>
 
     <p>Endpoints for user registration, login, and account management</p>
 
-                                <h2 id="authentication-POSTapi-auth-register">Register a new user</h2>
+                                <h2 id="authentication-POSTapi-v1-auth-register">Register a new user</h2>
 
 <p>
 </p>
@@ -139,13 +138,13 @@ You can switch the language used with the tabs at the top right (or from the nav
 <p>Create a new user account and receive an API authentication token.
 Email must be unique and will be converted to lowercase.</p>
 
-<span id="example-requests-POSTapi-auth-register">
+<span id="example-requests-POSTapi-v1-auth-register">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/register" \
+    "http://localhost/api/v1/auth/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -159,7 +158,7 @@ Email must be unique and will be converted to lowercase.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/register"
+    "http://localhost/api/v1/auth/register"
 );
 
 const headers = {
@@ -183,7 +182,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/register';
+$url = 'http://localhost/api/v1/auth/register';
 $response = $client-&gt;post(
     $url,
     [
@@ -204,7 +203,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-auth-register">
+<span id="example-responses-POSTapi-v1-auth-register">
             <blockquote>
             <p>Example response (201):</p>
         </blockquote>
@@ -239,43 +238,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-auth-register" hidden>
+<span id="execution-results-POSTapi-v1-auth-register" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-auth-register"></span>:
+                id="execution-response-status-POSTapi-v1-auth-register"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-register"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-register"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-auth-register" hidden>
+<span id="execution-error-POSTapi-v1-auth-register" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-register">
+    <pre><code id="execution-error-message-POSTapi-v1-auth-register">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-auth-register" data-method="POST"
-      data-path="api/auth/register"
+<form id="form-POSTapi-v1-auth-register" data-method="POST"
+      data-path="api/v1/auth/register"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-register', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-register', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-register"
-                    onclick="tryItOut('POSTapi-auth-register');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-auth-register"
+                    onclick="tryItOut('POSTapi-v1-auth-register');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-register"
-                    onclick="cancelTryOut('POSTapi-auth-register');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-auth-register"
+                    onclick="cancelTryOut('POSTapi-v1-auth-register');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-register"
+                    id="btn-executetryout-POSTapi-v1-auth-register"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -283,7 +282,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/auth/register</code></b>
+            <b><code>api/v1/auth/register</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -292,7 +291,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-register"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-register"
                value="application/json"
                data-component="header">
     <br>
@@ -304,7 +303,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-register"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-register"
                value="application/json"
                data-component="header">
     <br>
@@ -317,7 +316,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="name"                data-endpoint="POSTapi-auth-register"
+                              name="name"                data-endpoint="POSTapi-v1-auth-register"
                value="John Doe"
                data-component="body">
     <br>
@@ -329,7 +328,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-auth-register"
+                              name="email"                data-endpoint="POSTapi-v1-auth-register"
                value="john@example.com"
                data-component="body">
     <br>
@@ -341,7 +340,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-register"
+                              name="password"                data-endpoint="POSTapi-v1-auth-register"
                value="password123"
                data-component="body">
     <br>
@@ -353,7 +352,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password_confirmation"                data-endpoint="POSTapi-auth-register"
+                              name="password_confirmation"                data-endpoint="POSTapi-v1-auth-register"
                value="password123"
                data-component="body">
     <br>
@@ -361,7 +360,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-POSTapi-auth-login">User login</h2>
+                    <h2 id="authentication-POSTapi-v1-auth-login">User login</h2>
 
 <p>
 </p>
@@ -369,13 +368,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Authenticate with email and password to receive an API token.
 Rate limited to 5 attempts per minute per email+IP combination.</p>
 
-<span id="example-requests-POSTapi-auth-login">
+<span id="example-requests-POSTapi-v1-auth-login">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/login" \
+    "http://localhost/api/v1/auth/login" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -387,7 +386,7 @@ Rate limited to 5 attempts per minute per email+IP combination.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/login"
+    "http://localhost/api/v1/auth/login"
 );
 
 const headers = {
@@ -409,7 +408,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/login';
+$url = 'http://localhost/api/v1/auth/login';
 $response = $client-&gt;post(
     $url,
     [
@@ -428,7 +427,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-auth-login">
+<span id="example-responses-POSTapi-v1-auth-login">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -449,61 +448,71 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422, invalid credentials):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;These credentials do not match our records.&quot;
+    &quot;message&quot;: &quot;These credentials do not match our records.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;These credentials do not match our records.&quot;
+        ]
+    }
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (429):</p>
+            <p>Example response (422, too many attempts):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Too many login attempts. Please try again in 60 seconds.&quot;
+    &quot;message&quot;: &quot;Too many login attempts. Please try again in 60 seconds.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;Too many login attempts. Please try again in 60 seconds.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-auth-login" hidden>
+<span id="execution-results-POSTapi-v1-auth-login" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-auth-login"></span>:
+                id="execution-response-status-POSTapi-v1-auth-login"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-login"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-login"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-auth-login" hidden>
+<span id="execution-error-POSTapi-v1-auth-login" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-login">
+    <pre><code id="execution-error-message-POSTapi-v1-auth-login">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-auth-login" data-method="POST"
-      data-path="api/auth/login"
+<form id="form-POSTapi-v1-auth-login" data-method="POST"
+      data-path="api/v1/auth/login"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-login', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-login', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-login"
-                    onclick="tryItOut('POSTapi-auth-login');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-auth-login"
+                    onclick="tryItOut('POSTapi-v1-auth-login');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-login"
-                    onclick="cancelTryOut('POSTapi-auth-login');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-auth-login"
+                    onclick="cancelTryOut('POSTapi-v1-auth-login');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-login"
+                    id="btn-executetryout-POSTapi-v1-auth-login"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -511,7 +520,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/auth/login</code></b>
+            <b><code>api/v1/auth/login</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -520,7 +529,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-login"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-login"
                value="application/json"
                data-component="header">
     <br>
@@ -532,7 +541,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-login"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-login"
                value="application/json"
                data-component="header">
     <br>
@@ -545,7 +554,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-auth-login"
+                              name="email"                data-endpoint="POSTapi-v1-auth-login"
                value="john@example.com"
                data-component="body">
     <br>
@@ -557,7 +566,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-login"
+                              name="password"                data-endpoint="POSTapi-v1-auth-login"
                value="password123"
                data-component="body">
     <br>
@@ -565,7 +574,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-GETapi-auth-user">Get authenticated user</h2>
+                    <h2 id="authentication-GETapi-v1-auth-user">Get authenticated user</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -574,13 +583,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Retrieve the currently authenticated user's profile information.
 Requires a valid Bearer token in the Authorization header.</p>
 
-<span id="example-requests-GETapi-auth-user">
+<span id="example-requests-GETapi-v1-auth-user">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/api/auth/user" \
+    --get "http://localhost/api/v1/auth/user" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -588,7 +597,7 @@ Requires a valid Bearer token in the Authorization header.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/user"
+    "http://localhost/api/v1/auth/user"
 );
 
 const headers = {
@@ -605,7 +614,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/user';
+$url = 'http://localhost/api/v1/auth/user';
 $response = $client-&gt;get(
     $url,
     [
@@ -621,7 +630,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-GETapi-auth-user">
+<span id="example-responses-GETapi-v1-auth-user">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
@@ -647,43 +656,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-auth-user" hidden>
+<span id="execution-results-GETapi-v1-auth-user" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-auth-user"></span>:
+                id="execution-response-status-GETapi-v1-auth-user"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-auth-user"
+    <pre class="json"><code id="execution-response-content-GETapi-v1-auth-user"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-auth-user" hidden>
+<span id="execution-error-GETapi-v1-auth-user" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-auth-user">
+    <pre><code id="execution-error-message-GETapi-v1-auth-user">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-auth-user" data-method="GET"
-      data-path="api/auth/user"
+<form id="form-GETapi-v1-auth-user" data-method="GET"
+      data-path="api/v1/auth/user"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-auth-user', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-auth-user', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-auth-user"
-                    onclick="tryItOut('GETapi-auth-user');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-auth-user"
+                    onclick="tryItOut('GETapi-v1-auth-user');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-auth-user"
-                    onclick="cancelTryOut('GETapi-auth-user');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-auth-user"
+                    onclick="cancelTryOut('GETapi-v1-auth-user');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-auth-user"
+                    id="btn-executetryout-GETapi-v1-auth-user"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -691,7 +700,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/auth/user</code></b>
+            <b><code>api/v1/auth/user</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -700,7 +709,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-auth-user"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-auth-user"
                value="Bearer {YOUR_TOKEN_HERE}"
                data-component="header">
     <br>
@@ -712,7 +721,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-auth-user"
+                              name="Content-Type"                data-endpoint="GETapi-v1-auth-user"
                value="application/json"
                data-component="header">
     <br>
@@ -724,7 +733,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-auth-user"
+                              name="Accept"                data-endpoint="GETapi-v1-auth-user"
                value="application/json"
                data-component="header">
     <br>
@@ -732,7 +741,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="authentication-POSTapi-auth-logout">Logout (current device)</h2>
+                    <h2 id="authentication-POSTapi-v1-auth-logout">Logout (current device)</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -741,13 +750,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Revoke the current API token used for authentication.
 Other tokens for this user remain valid.</p>
 
-<span id="example-requests-POSTapi-auth-logout">
+<span id="example-requests-POSTapi-v1-auth-logout">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/logout" \
+    "http://localhost/api/v1/auth/logout" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -755,7 +764,7 @@ Other tokens for this user remain valid.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/logout"
+    "http://localhost/api/v1/auth/logout"
 );
 
 const headers = {
@@ -772,7 +781,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/logout';
+$url = 'http://localhost/api/v1/auth/logout';
 $response = $client-&gt;post(
     $url,
     [
@@ -788,7 +797,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-auth-logout">
+<span id="example-responses-POSTapi-v1-auth-logout">
             <blockquote>
             <p>Example response (204, success):</p>
         </blockquote>
@@ -805,43 +814,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-auth-logout" hidden>
+<span id="execution-results-POSTapi-v1-auth-logout" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-auth-logout"></span>:
+                id="execution-response-status-POSTapi-v1-auth-logout"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-logout"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-logout"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-auth-logout" hidden>
+<span id="execution-error-POSTapi-v1-auth-logout" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-logout">
+    <pre><code id="execution-error-message-POSTapi-v1-auth-logout">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-auth-logout" data-method="POST"
-      data-path="api/auth/logout"
+<form id="form-POSTapi-v1-auth-logout" data-method="POST"
+      data-path="api/v1/auth/logout"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-logout', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-logout', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-logout"
-                    onclick="tryItOut('POSTapi-auth-logout');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-auth-logout"
+                    onclick="tryItOut('POSTapi-v1-auth-logout');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-logout"
-                    onclick="cancelTryOut('POSTapi-auth-logout');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-auth-logout"
+                    onclick="cancelTryOut('POSTapi-v1-auth-logout');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-logout"
+                    id="btn-executetryout-POSTapi-v1-auth-logout"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -849,7 +858,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/auth/logout</code></b>
+            <b><code>api/v1/auth/logout</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -858,7 +867,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-auth-logout"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-v1-auth-logout"
                value="Bearer {YOUR_TOKEN_HERE}"
                data-component="header">
     <br>
@@ -870,7 +879,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-logout"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-logout"
                value="application/json"
                data-component="header">
     <br>
@@ -882,7 +891,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-logout"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-logout"
                value="application/json"
                data-component="header">
     <br>
@@ -890,7 +899,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="authentication-DELETEapi-auth-logout-all">Logout (all devices)</h2>
+                    <h2 id="authentication-DELETEapi-v1-auth-logout-all">Logout (all devices)</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -899,13 +908,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Revoke all API tokens for the authenticated user.
 This will log the user out from all devices.</p>
 
-<span id="example-requests-DELETEapi-auth-logout-all">
+<span id="example-requests-DELETEapi-v1-auth-logout-all">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/api/auth/logout/all" \
+    "http://localhost/api/v1/auth/logout/all" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -913,7 +922,7 @@ This will log the user out from all devices.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/logout/all"
+    "http://localhost/api/v1/auth/logout/all"
 );
 
 const headers = {
@@ -930,7 +939,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/logout/all';
+$url = 'http://localhost/api/v1/auth/logout/all';
 $response = $client-&gt;delete(
     $url,
     [
@@ -946,7 +955,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-DELETEapi-auth-logout-all">
+<span id="example-responses-DELETEapi-v1-auth-logout-all">
             <blockquote>
             <p>Example response (204, success):</p>
         </blockquote>
@@ -963,43 +972,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-DELETEapi-auth-logout-all" hidden>
+<span id="execution-results-DELETEapi-v1-auth-logout-all" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-DELETEapi-auth-logout-all"></span>:
+                id="execution-response-status-DELETEapi-v1-auth-logout-all"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-DELETEapi-auth-logout-all"
+    <pre class="json"><code id="execution-response-content-DELETEapi-v1-auth-logout-all"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-DELETEapi-auth-logout-all" hidden>
+<span id="execution-error-DELETEapi-v1-auth-logout-all" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-DELETEapi-auth-logout-all">
+    <pre><code id="execution-error-message-DELETEapi-v1-auth-logout-all">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-DELETEapi-auth-logout-all" data-method="DELETE"
-      data-path="api/auth/logout/all"
+<form id="form-DELETEapi-v1-auth-logout-all" data-method="DELETE"
+      data-path="api/v1/auth/logout/all"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-auth-logout-all', this);">
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-v1-auth-logout-all', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-DELETEapi-auth-logout-all"
-                    onclick="tryItOut('DELETEapi-auth-logout-all');">Try it out ⚡
+                    id="btn-tryout-DELETEapi-v1-auth-logout-all"
+                    onclick="tryItOut('DELETEapi-v1-auth-logout-all');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-DELETEapi-auth-logout-all"
-                    onclick="cancelTryOut('DELETEapi-auth-logout-all');" hidden>Cancel 🛑
+                    id="btn-canceltryout-DELETEapi-v1-auth-logout-all"
+                    onclick="cancelTryOut('DELETEapi-v1-auth-logout-all');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-DELETEapi-auth-logout-all"
+                    id="btn-executetryout-DELETEapi-v1-auth-logout-all"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -1007,7 +1016,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-red">DELETE</small>
-            <b><code>api/auth/logout/all</code></b>
+            <b><code>api/v1/auth/logout/all</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1016,7 +1025,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-auth-logout-all"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-v1-auth-logout-all"
                value="Bearer {YOUR_TOKEN_HERE}"
                data-component="header">
     <br>
@@ -1028,7 +1037,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="DELETEapi-auth-logout-all"
+                              name="Content-Type"                data-endpoint="DELETEapi-v1-auth-logout-all"
                value="application/json"
                data-component="header">
     <br>
@@ -1040,7 +1049,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="DELETEapi-auth-logout-all"
+                              name="Accept"                data-endpoint="DELETEapi-v1-auth-logout-all"
                value="application/json"
                data-component="header">
     <br>
@@ -1048,7 +1057,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="authentication-POSTapi-auth-forgot-password">Request password reset</h2>
+                    <h2 id="authentication-POSTapi-v1-auth-forgot-password">Request password reset</h2>
 
 <p>
 </p>
@@ -1056,13 +1065,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Send a password reset link to the user's email address.
 Check MailHog (<a href="http://localhost:8025">http://localhost:8025</a>) in development to retrieve the token.</p>
 
-<span id="example-requests-POSTapi-auth-forgot-password">
+<span id="example-requests-POSTapi-v1-auth-forgot-password">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/forgot-password" \
+    "http://localhost/api/v1/auth/forgot-password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1073,7 +1082,7 @@ Check MailHog (<a href="http://localhost:8025">http://localhost:8025</a>) in dev
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/forgot-password"
+    "http://localhost/api/v1/auth/forgot-password"
 );
 
 const headers = {
@@ -1094,7 +1103,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/forgot-password';
+$url = 'http://localhost/api/v1/auth/forgot-password';
 $response = $client-&gt;post(
     $url,
     [
@@ -1112,14 +1121,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-auth-forgot-password">
+<span id="example-responses-POSTapi-v1-auth-forgot-password">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;We have emailed your password reset link!&quot;
+    &quot;message&quot;: &quot;We have emailed your password reset link.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1132,43 +1141,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-auth-forgot-password" hidden>
+<span id="execution-results-POSTapi-v1-auth-forgot-password" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-auth-forgot-password"></span>:
+                id="execution-response-status-POSTapi-v1-auth-forgot-password"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-forgot-password"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-forgot-password"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-auth-forgot-password" hidden>
+<span id="execution-error-POSTapi-v1-auth-forgot-password" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-forgot-password">
+    <pre><code id="execution-error-message-POSTapi-v1-auth-forgot-password">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-auth-forgot-password" data-method="POST"
-      data-path="api/auth/forgot-password"
+<form id="form-POSTapi-v1-auth-forgot-password" data-method="POST"
+      data-path="api/v1/auth/forgot-password"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-forgot-password', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-forgot-password', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-forgot-password"
-                    onclick="tryItOut('POSTapi-auth-forgot-password');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-auth-forgot-password"
+                    onclick="tryItOut('POSTapi-v1-auth-forgot-password');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-forgot-password"
-                    onclick="cancelTryOut('POSTapi-auth-forgot-password');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-auth-forgot-password"
+                    onclick="cancelTryOut('POSTapi-v1-auth-forgot-password');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-forgot-password"
+                    id="btn-executetryout-POSTapi-v1-auth-forgot-password"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -1176,7 +1185,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/auth/forgot-password</code></b>
+            <b><code>api/v1/auth/forgot-password</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1185,7 +1194,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-forgot-password"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-forgot-password"
                value="application/json"
                data-component="header">
     <br>
@@ -1197,7 +1206,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-forgot-password"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-forgot-password"
                value="application/json"
                data-component="header">
     <br>
@@ -1210,7 +1219,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-auth-forgot-password"
+                              name="email"                data-endpoint="POSTapi-v1-auth-forgot-password"
                value="john@example.com"
                data-component="body">
     <br>
@@ -1218,7 +1227,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         </div>
         </form>
 
-                    <h2 id="authentication-POSTapi-auth-reset-password">Reset password</h2>
+                    <h2 id="authentication-POSTapi-v1-auth-reset-password">Reset password</h2>
 
 <p>
 </p>
@@ -1226,13 +1235,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Reset the user's password using the token from the password reset email.
 Password must be at least 8 characters and confirmed. Token expires after 60 minutes.</p>
 
-<span id="example-requests-POSTapi-auth-reset-password">
+<span id="example-requests-POSTapi-v1-auth-reset-password">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/reset-password" \
+    "http://localhost/api/v1/auth/reset-password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1246,7 +1255,7 @@ Password must be at least 8 characters and confirmed. Token expires after 60 min
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/reset-password"
+    "http://localhost/api/v1/auth/reset-password"
 );
 
 const headers = {
@@ -1270,7 +1279,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/reset-password';
+$url = 'http://localhost/api/v1/auth/reset-password';
 $response = $client-&gt;post(
     $url,
     [
@@ -1291,14 +1300,14 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 </span>
 
-<span id="example-responses-POSTapi-auth-reset-password">
+<span id="example-responses-POSTapi-v1-auth-reset-password">
             <blockquote>
             <p>Example response (200):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Your password has been reset!&quot;
+    &quot;message&quot;: &quot;Your password has been reset.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1325,43 +1334,43 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
     </span>
-<span id="execution-results-POSTapi-auth-reset-password" hidden>
+<span id="execution-results-POSTapi-v1-auth-reset-password" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-POSTapi-auth-reset-password"></span>:
+                id="execution-response-status-POSTapi-v1-auth-reset-password"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-reset-password"
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-auth-reset-password"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-auth-reset-password" hidden>
+<span id="execution-error-POSTapi-v1-auth-reset-password" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-reset-password">
+    <pre><code id="execution-error-message-POSTapi-v1-auth-reset-password">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-POSTapi-auth-reset-password" data-method="POST"
-      data-path="api/auth/reset-password"
+<form id="form-POSTapi-v1-auth-reset-password" data-method="POST"
+      data-path="api/v1/auth/reset-password"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-reset-password', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-auth-reset-password', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-reset-password"
-                    onclick="tryItOut('POSTapi-auth-reset-password');">Try it out ⚡
+                    id="btn-tryout-POSTapi-v1-auth-reset-password"
+                    onclick="tryItOut('POSTapi-v1-auth-reset-password');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-reset-password"
-                    onclick="cancelTryOut('POSTapi-auth-reset-password');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTapi-v1-auth-reset-password"
+                    onclick="cancelTryOut('POSTapi-v1-auth-reset-password');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-reset-password"
+                    id="btn-executetryout-POSTapi-v1-auth-reset-password"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -1369,7 +1378,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/auth/reset-password</code></b>
+            <b><code>api/v1/auth/reset-password</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1378,7 +1387,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-reset-password"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="application/json"
                data-component="header">
     <br>
@@ -1390,7 +1399,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-reset-password"
+                              name="Accept"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="application/json"
                data-component="header">
     <br>
@@ -1403,7 +1412,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="token"                data-endpoint="POSTapi-auth-reset-password"
+                              name="token"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="abc123token456"
                data-component="body">
     <br>
@@ -1415,7 +1424,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="email"                data-endpoint="POSTapi-auth-reset-password"
+                              name="email"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="john@example.com"
                data-component="body">
     <br>
@@ -1427,7 +1436,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-reset-password"
+                              name="password"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="newpassword123"
                data-component="body">
     <br>
@@ -1439,7 +1448,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="password_confirmation"                data-endpoint="POSTapi-auth-reset-password"
+                              name="password_confirmation"                data-endpoint="POSTapi-v1-auth-reset-password"
                value="newpassword123"
                data-component="body">
     <br>

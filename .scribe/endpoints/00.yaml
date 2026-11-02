@@ -7,7 +7,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/register
+    uri: api/v1/auth/register
     metadata:
       custom: []
       groupName: Authentication
@@ -121,7 +121,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/login
+    uri: api/v1/auth/login
     metadata:
       custom: []
       groupName: Authentication
@@ -192,22 +192,28 @@ endpoints:
         description: ''
       -
         custom: []
-        status: 401
+        status: 422
         content: |-
           {
-            "message": "These credentials do not match our records."
+            "message": "These credentials do not match our records.",
+            "errors": {
+              "email": ["These credentials do not match our records."]
+            }
           }
         headers: []
-        description: ''
+        description: 'invalid credentials'
       -
         custom: []
-        status: 429
+        status: 422
         content: |-
           {
-            "message": "Too many login attempts. Please try again in 60 seconds."
+            "message": "Too many login attempts. Please try again in 60 seconds.",
+            "errors": {
+              "email": ["Too many login attempts. Please try again in 60 seconds."]
+            }
           }
         headers: []
-        description: ''
+        description: 'too many attempts'
     responseFields: []
     auth: []
     controller: null
@@ -217,7 +223,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: api/auth/user
+    uri: api/v1/auth/user
     metadata:
       custom: []
       groupName: Authentication
@@ -280,7 +286,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/logout
+    uri: api/v1/auth/logout
     metadata:
       custom: []
       groupName: Authentication
@@ -334,7 +340,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: api/auth/logout/all
+    uri: api/v1/auth/logout/all
     metadata:
       custom: []
       groupName: Authentication
@@ -388,7 +394,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/forgot-password
+    uri: api/v1/auth/forgot-password
     metadata:
       custom: []
       groupName: Authentication
@@ -431,7 +437,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "We have emailed your password reset link!"
+            "message": "We have emailed your password reset link."
           }
         headers: []
         description: ''
@@ -453,7 +459,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/auth/reset-password
+    uri: api/v1/auth/reset-password
     metadata:
       custom: []
       groupName: Authentication
@@ -532,7 +538,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Your password has been reset!"
+            "message": "Your password has been reset."
           }
         headers: []
         description: ''

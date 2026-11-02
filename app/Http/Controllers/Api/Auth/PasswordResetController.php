@@ -28,7 +28,7 @@ class PasswordResetController extends Controller
      * @bodyParam email string required User's email address. Example: john@example.com
      *
      * @response 200 {
-     *   "message": "We have emailed your password reset link!"
+     *   "message": "We have emailed your password reset link."
      * }
      * @response 400 {
      *   "message": "We can't find a user with that email address."
@@ -63,7 +63,7 @@ class PasswordResetController extends Controller
      * @bodyParam password_confirmation string required Password confirmation. Must match password. Example: newpassword123
      *
      * @response 200 {
-     *   "message": "Your password has been reset!"
+     *   "message": "Your password has been reset."
      * }
      * @response 400 {
      *   "message": "This password reset token is invalid."
