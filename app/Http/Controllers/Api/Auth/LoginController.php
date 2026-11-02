@@ -36,11 +36,17 @@ class LoginController extends Controller
      *     "token_type": "Bearer"
      *   }
      * }
-     * @response 401 {
-     *   "message": "These credentials do not match our records."
+     * @response 422 scenario="invalid credentials" {
+     *   "message": "These credentials do not match our records.",
+     *   "errors": {
+     *     "email": ["These credentials do not match our records."]
+     *   }
      * }
-     * @response 429 {
-     *   "message": "Too many login attempts. Please try again in 60 seconds."
+     * @response 422 scenario="too many attempts" {
+     *   "message": "Too many login attempts. Please try again in 60 seconds.",
+     *   "errors": {
+     *     "email": ["Too many login attempts. Please try again in 60 seconds."]
+     *   }
      * }
      */
     public function store(LoginRequest $request): JsonResponse

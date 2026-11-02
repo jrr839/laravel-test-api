@@ -192,22 +192,28 @@ endpoints:
         description: ''
       -
         custom: []
-        status: 401
+        status: 422
         content: |-
           {
-            "message": "These credentials do not match our records."
+            "message": "These credentials do not match our records.",
+            "errors": {
+              "email": ["These credentials do not match our records."]
+            }
           }
         headers: []
-        description: ''
+        description: 'invalid credentials'
       -
         custom: []
-        status: 429
+        status: 422
         content: |-
           {
-            "message": "Too many login attempts. Please try again in 60 seconds."
+            "message": "Too many login attempts. Please try again in 60 seconds.",
+            "errors": {
+              "email": ["Too many login attempts. Please try again in 60 seconds."]
+            }
           }
         headers: []
-        description: ''
+        description: 'too many attempts'
     responseFields: []
     auth: []
     controller: null
@@ -431,7 +437,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "We have emailed your password reset link!"
+            "message": "We have emailed your password reset link."
           }
         headers: []
         description: ''
@@ -532,7 +538,7 @@ endpoints:
         status: 200
         content: |-
           {
-            "message": "Your password has been reset!"
+            "message": "Your password has been reset."
           }
         headers: []
         description: ''

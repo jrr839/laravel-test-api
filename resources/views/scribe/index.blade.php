@@ -27,7 +27,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost/api";
+        var tryItOutBaseUrl = "http://localhost";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -105,7 +105,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: December 9, 2025</li>
+        <li>Last updated: November 2, 2026</li>
     </ul>
 </div>
 
@@ -115,12 +115,11 @@
         <h1 id="introduction">Introduction</h1>
 <p>REST API endpoints for user authentication using Laravel Sanctum. Includes user registration, login, profile access, logout, and password recovery.</p>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost/api</code>
+    <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
-<pre><code>This documentation aims to provide all the information you need to work with our API.
-
-&lt;aside&gt;As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
-You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).&lt;/aside&gt;</code></pre>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_TOKEN_HERE}"</code></strong>.</p>
@@ -145,7 +144,7 @@ Email must be unique and will be converted to lowercase.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/register" \
+    "http://localhost/api/auth/register" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -159,7 +158,7 @@ Email must be unique and will be converted to lowercase.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/register"
+    "http://localhost/api/auth/register"
 );
 
 const headers = {
@@ -183,7 +182,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/register';
+$url = 'http://localhost/api/auth/register';
 $response = $client-&gt;post(
     $url,
     [
@@ -375,7 +374,7 @@ Rate limited to 5 attempts per minute per email+IP combination.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/login" \
+    "http://localhost/api/auth/login" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -387,7 +386,7 @@ Rate limited to 5 attempts per minute per email+IP combination.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/login"
+    "http://localhost/api/auth/login"
 );
 
 const headers = {
@@ -409,7 +408,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/login';
+$url = 'http://localhost/api/auth/login';
 $response = $client-&gt;post(
     $url,
     [
@@ -449,21 +448,31 @@ print_r(json_decode((string) $body));</code></pre></div>
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (422, invalid credentials):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;These credentials do not match our records.&quot;
+    &quot;message&quot;: &quot;These credentials do not match our records.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;These credentials do not match our records.&quot;
+        ]
+    }
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (429):</p>
+            <p>Example response (422, too many attempts):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Too many login attempts. Please try again in 60 seconds.&quot;
+    &quot;message&quot;: &quot;Too many login attempts. Please try again in 60 seconds.&quot;,
+    &quot;errors&quot;: {
+        &quot;email&quot;: [
+            &quot;Too many login attempts. Please try again in 60 seconds.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -580,7 +589,7 @@ Requires a valid Bearer token in the Authorization header.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/api/auth/user" \
+    --get "http://localhost/api/auth/user" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -588,7 +597,7 @@ Requires a valid Bearer token in the Authorization header.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/user"
+    "http://localhost/api/auth/user"
 );
 
 const headers = {
@@ -605,7 +614,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/user';
+$url = 'http://localhost/api/auth/user';
 $response = $client-&gt;get(
     $url,
     [
@@ -747,7 +756,7 @@ Other tokens for this user remain valid.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/logout" \
+    "http://localhost/api/auth/logout" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -755,7 +764,7 @@ Other tokens for this user remain valid.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/logout"
+    "http://localhost/api/auth/logout"
 );
 
 const headers = {
@@ -772,7 +781,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/logout';
+$url = 'http://localhost/api/auth/logout';
 $response = $client-&gt;post(
     $url,
     [
@@ -905,7 +914,7 @@ This will log the user out from all devices.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/api/auth/logout/all" \
+    "http://localhost/api/auth/logout/all" \
     --header "Authorization: Bearer {YOUR_TOKEN_HERE}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -913,7 +922,7 @@ This will log the user out from all devices.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/logout/all"
+    "http://localhost/api/auth/logout/all"
 );
 
 const headers = {
@@ -930,7 +939,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/logout/all';
+$url = 'http://localhost/api/auth/logout/all';
 $response = $client-&gt;delete(
     $url,
     [
@@ -1062,7 +1071,7 @@ Check MailHog (<a href="http://localhost:8025">http://localhost:8025</a>) in dev
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/forgot-password" \
+    "http://localhost/api/auth/forgot-password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1073,7 +1082,7 @@ Check MailHog (<a href="http://localhost:8025">http://localhost:8025</a>) in dev
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/forgot-password"
+    "http://localhost/api/auth/forgot-password"
 );
 
 const headers = {
@@ -1094,7 +1103,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/forgot-password';
+$url = 'http://localhost/api/auth/forgot-password';
 $response = $client-&gt;post(
     $url,
     [
@@ -1119,7 +1128,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;We have emailed your password reset link!&quot;
+    &quot;message&quot;: &quot;We have emailed your password reset link.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1232,7 +1241,7 @@ Password must be at least 8 characters and confirmed. Token expires after 60 min
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/api/auth/reset-password" \
+    "http://localhost/api/auth/reset-password" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1246,7 +1255,7 @@ Password must be at least 8 characters and confirmed. Token expires after 60 min
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/api/auth/reset-password"
+    "http://localhost/api/auth/reset-password"
 );
 
 const headers = {
@@ -1270,7 +1279,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/api/auth/reset-password';
+$url = 'http://localhost/api/auth/reset-password';
 $response = $client-&gt;post(
     $url,
     [
@@ -1298,7 +1307,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Your password has been reset!&quot;
+    &quot;message&quot;: &quot;Your password has been reset.&quot;
 }</code>
  </pre>
             <blockquote>

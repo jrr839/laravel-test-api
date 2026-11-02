@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost\/api"
+            "value": "http:\/\/localhost"
         }
     ],
     "info": {
         "name": "Laravel API Authentication Documentation",
-        "_postman_id": "2ededc20-9659-40e6-8b8b-c22501f9496a",
+        "_postman_id": "3cee1cd4-3bc5-4cf2-a846-8d74d200ed6a",
         "description": "REST API endpoints for user authentication using Laravel Sanctum. Includes user registration, login, profile access, logout, and password recovery.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -101,15 +101,15 @@
                         },
                         {
                             "header": [],
-                            "code": 401,
-                            "body": "{\n  \"message\": \"These credentials do not match our records.\"\n}",
-                            "name": ""
+                            "code": 422,
+                            "body": "{\n  \"message\": \"These credentials do not match our records.\",\n  \"errors\": {\n    \"email\": [\"These credentials do not match our records.\"]\n  }\n}",
+                            "name": "invalid credentials"
                         },
                         {
                             "header": [],
-                            "code": 429,
-                            "body": "{\n  \"message\": \"Too many login attempts. Please try again in 60 seconds.\"\n}",
-                            "name": ""
+                            "code": 422,
+                            "body": "{\n  \"message\": \"Too many login attempts. Please try again in 60 seconds.\",\n  \"errors\": {\n    \"email\": [\"Too many login attempts. Please try again in 60 seconds.\"]\n  }\n}",
+                            "name": "too many attempts"
                         }
                     ]
                 },
@@ -260,7 +260,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"message\": \"We have emailed your password reset link!\"\n}",
+                            "body": "{\n  \"message\": \"We have emailed your password reset link.\"\n}",
                             "name": ""
                         },
                         {
@@ -304,7 +304,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"message\": \"Your password has been reset!\"\n}",
+                            "body": "{\n  \"message\": \"Your password has been reset.\"\n}",
                             "name": ""
                         },
                         {

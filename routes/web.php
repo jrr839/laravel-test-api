@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
@@ -19,23 +20,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // API Documentation routes (protected)
 Route::middleware(['auth', 'verified', 'can.view.docs'])->group(function () {
     Route::get('/docs', function () {
-        return response()->file(public_path('docs/index.html'));
+        return view('scribe.index');
     })->name('scribe');
 
     Route::get('/docs.postman', function () {
-        return response()->file(public_path('docs/collection.json'), [
+        return response()->file(Storage::disk('local')->path('scribe/collection.json'), [
             'Content-Type' => 'application/json',
         ]);
     })->name('scribe.postman');
 
     Route::get('/docs.openapi', function () {
-        return response()->file(public_path('docs/openapi.yaml'), [
+        return response()->file(Storage::disk('local')->path('scribe/openapi.yaml'), [
             'Content-Type' => 'text/yaml',
         ]);
     })->name('scribe.openapi');
 
     Route::get('/docs.json', function () {
-        return response()->file(public_path('docs/collection.json'), [
+        return response()->file(Storage::disk('local')->path('scribe/collection.json'), [
             'Content-Type' => 'application/json',
         ]);
     })->name('docs.json');
