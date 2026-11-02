@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Gate for API documentation access
         Gate::define('view-api-docs', function ($user) {
-            return $user->email === 'jonathanrr839@gmail.com';
+            return in_array(strtolower($user->email), config('docs.allowed_emails'), true);
         });
     }
 }

@@ -5,8 +5,12 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+beforeEach(function () {
+    config(['docs.allowed_emails' => ['docs-user@example.com']]);
+});
+
 it('allows authorized user to access api documentation', function () {
-    $user = User::factory()->create(['email' => 'jonathanrr839@gmail.com']);
+    $user = User::factory()->create(['email' => 'docs-user@example.com']);
 
     $response = $this->actingAs($user)->get('/docs');
 
@@ -29,7 +33,7 @@ it('requires authentication to access api documentation', function () {
 });
 
 it('allows authorized user to access openapi json', function () {
-    $user = User::factory()->create(['email' => 'jonathanrr839@gmail.com']);
+    $user = User::factory()->create(['email' => 'docs-user@example.com']);
 
     $response = $this->actingAs($user)->get('/docs.json');
 
@@ -43,7 +47,7 @@ it('protects every documentation route', function (string $uri) {
     $otherUser = User::factory()->create(['email' => 'other@example.com']);
     $this->actingAs($otherUser)->get($uri)->assertForbidden();
 
-    $authorizedUser = User::factory()->create(['email' => 'jonathanrr839@gmail.com']);
+    $authorizedUser = User::factory()->create(['email' => 'docs-user@example.com']);
     $this->actingAs($authorizedUser)->get($uri)->assertOk();
 })->with(['/docs', '/docs.json', '/docs.openapi', '/docs.postman']);
 
@@ -66,7 +70,7 @@ it('does not include the api prefix in the documented base url', function () {
 });
 
 it('documents urls with a single api prefix', function (string $uri) {
-    $user = User::factory()->create(['email' => 'jonathanrr839@gmail.com']);
+    $user = User::factory()->create(['email' => 'docs-user@example.com']);
 
     $response = $this->actingAs($user)->get($uri);
     $content = $response->baseResponse instanceof BinaryFileResponse
@@ -75,3 +79,17 @@ it('documents urls with a single api prefix', function (string $uri) {
 
     expect($content)->not->toContain('api/api');
 })->with(['/docs', '/docs.openapi', '/docs.postman']);
+
+it('denies everyone when no emails are allowed', function () {
+    config(['docs.allowed_emails' => []]);
+
+    $user = User::factory()->create(['email' => 'docs-user@example.com']);
+
+    $this->actingAs($user)->get('/docs')->assertForbidden();
+});
+
+it('matches allowed emails regardless of case', function () {
+    $user = User::factory()->create(['email' => 'Docs-User@Example.com']);
+
+    $this->actingAs($user)->get('/docs')->assertOk();
+});
