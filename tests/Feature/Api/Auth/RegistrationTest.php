@@ -145,11 +145,13 @@ test('registration token can be used to authenticate', function () {
     $token = $response->json('data.token');
 
     $authResponse = $this->withHeader('Authorization', 'Bearer '.$token)
-        ->getJson('/api/v1/user');
+        ->getJson('/api/v1/auth/user');
 
     $authResponse->assertOk()
         ->assertJson([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'data' => [
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+            ],
         ]);
 });

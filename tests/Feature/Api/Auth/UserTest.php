@@ -96,3 +96,9 @@ test('user profile returns correct data structure', function () {
     expect($data['email'])->toBe($user->email);
     expect($data['created_at'])->toBeString();
 });
+
+test('the duplicate user route has been removed', function () {
+    Sanctum::actingAs(User::factory()->create());
+
+    $this->getJson('/api/v1/user')->assertNotFound();
+});
