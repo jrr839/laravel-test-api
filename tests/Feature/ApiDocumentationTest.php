@@ -93,3 +93,24 @@ it('matches allowed emails regardless of case', function () {
 
     $this->actingAs($user)->get('/docs')->assertOk();
 });
+
+it('blocks an unverified user with an allowed email until they verify', function () {
+    $user = User::factory()->unverified()->create(['email' => 'docs-user@example.com']);
+
+    $this->actingAs($user)->get('/docs')->assertRedirect(route('verification.notice'));
+
+    $user->markEmailAsVerified();
+
+    $this->actingAs($user)->get('/docs')->assertOk();
+});
+
+it('blocks a user who changes their email to an allowed one until they verify', function () {
+    $user = User::factory()->create(['email' => 'someone-else@example.com']);
+
+    $this->actingAs($user)->patch(route('profile.update'), [
+        'name' => $user->name,
+        'email' => 'docs-user@example.com',
+    ]);
+
+    $this->actingAs($user->refresh())->get('/docs')->assertRedirect(route('verification.notice'));
+});
